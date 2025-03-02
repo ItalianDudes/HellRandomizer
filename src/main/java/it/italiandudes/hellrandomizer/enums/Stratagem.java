@@ -51,7 +51,7 @@ public enum Stratagem {
     CODE_MD17_ANTI_TANK_MINES("MD-17 Mine Anticarro"),
     CODE_LAS99_QUASAR_CANNON("LAS-99 Cannone Quasar", true),
     CODE_SH32_SHIELD_GENERATOR_PACK("SH-32 Pacchetto Generatore di Scudi", false, true),
-    // GAS_MINES("MD-8 Mine a Gas"),
+    CODE_MD8_GAS_MINES("MD-8 Mine a Gas"),
     CODE_AMG43_MACHINE_GUN_SENTRY("A/MG-43 Sentinella con Mitragliatrice"),
     CODE_AG16_GATLING_SENTRY("A/G-16 Sentinella con Gatling"),
     CODE_AM12_MORTAR_SENTRY("A/M-12 Sentinella con Mortaio"),
