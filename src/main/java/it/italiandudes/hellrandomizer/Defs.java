@@ -176,7 +176,8 @@ public final class Defs {
                             Stratagem.CODE_AXTX13_GUARD_DOG_DOG_BREATH,
                             Stratagem.CODE_SH51_DIRECTIONAL_SHIELD,
                             Stratagem.CODE_AFLAM40_FLAME_SENTRY,
-                            Stratagem.CODE_B100_PORTABLE_HELLBOMB
+                            Stratagem.CODE_B100_PORTABLE_HELLBOMB,
+                            Stratagem.CODE_MD8_GAS_MINES
 
                     },
                     false,
@@ -191,7 +192,7 @@ public final class Defs {
                     }
             ),
             new PlayerData(
-                    "Manta", false,
+                    "Manta", true,
                     ArmorCategory.values(),
                     true,
                     new ArmorBuff[] {
@@ -201,16 +202,11 @@ public final class Defs {
                     new PrimaryWeapon[] {
                             PrimaryWeapon.STA52_ASSALT_RIFLE,
                             PrimaryWeapon.AR23A_LIBERATOR_CARBINE,
-                            PrimaryWeapon.AR61_TENDERIZER,
-                            PrimaryWeapon.SMG72_PUMMELER,
-                            PrimaryWeapon.SG225SP_BREAKER_SPRAY_AND_PRAY,
                             PrimaryWeapon.CB9_EXPLODING_CROSSBOW,
-                            PrimaryWeapon.ARC12_BLITZER,
-                            PrimaryWeapon.PLAS101_PURIFIER
+                            PrimaryWeapon.ARC12_BLITZER
                     },
                     true,
                     new SecondaryWeapon[] {
-                            SecondaryWeapon.P113_VERDICT,
                             SecondaryWeapon.CQC30_STUN_BATON,
                             SecondaryWeapon.CQC5_COMBAT_HATCHET,
                             SecondaryWeapon.SG22_BUSHWHACKER,
@@ -219,18 +215,15 @@ public final class Defs {
                     },
                     true,
                     new ThrowableWeapon[] {
-                            ThrowableWeapon.G10_INCENDIARY,
-                            ThrowableWeapon.G13_INCENDIARY_IMPACT,
-                            ThrowableWeapon.G50_SEEKER,
                             ThrowableWeapon.K2_THROWING_KNIFE
                     },
                     true,
                     new Stratagem[] {
-                            Stratagem.CODE_AFLAM40_FLAME_SENTRY
+                            Stratagem.CODE_AFLAM40_FLAME_SENTRY,
+                            Stratagem.CODE_MD8_GAS_MINES
                     },
                     true,
                     new Booster[] {
-                            Booster.MOTIVATIONAL_SHOCKS,
                             Booster.EXPERIMENTAL_INFUSION
                     }
             ),
@@ -287,7 +280,8 @@ public final class Defs {
                     new Stratagem[] {
                             Stratagem.CODE_TX41_STERILIZER,
                             Stratagem.CODE_AXTX13_GUARD_DOG_DOG_BREATH,
-                            Stratagem.CODE_B100_PORTABLE_HELLBOMB
+                            Stratagem.CODE_B100_PORTABLE_HELLBOMB,
+                            Stratagem.CODE_MD8_GAS_MINES
                     },
                     true,
                     new Booster[] {
@@ -350,7 +344,8 @@ public final class Defs {
                             Stratagem.CODE_SH51_DIRECTIONAL_SHIELD,
                             Stratagem.CODE_AFLAM40_FLAME_SENTRY,
                             Stratagem.CODE_EAT12_ANTI_TANK_EMPLACEMENT,
-                            Stratagem.CODE_B100_PORTABLE_HELLBOMB
+                            Stratagem.CODE_B100_PORTABLE_HELLBOMB,
+                            Stratagem.CODE_MD8_GAS_MINES
                     },
                     true,
                     new Booster[] {
@@ -386,7 +381,7 @@ public final class Defs {
      * Scelte: true | false
      * DEFAULT: true
      * */
-    public static final boolean RANDOMIZE_DIFFICULTY = false;
+    public static final boolean RANDOMIZE_DIFFICULTY = true;
 
     /*
     * Permette di impostare il range di difficoltà che il Randomizer può randomizzare.
@@ -394,8 +389,8 @@ public final class Defs {
     * MAX_DIFFICULTY rappresenta la difficoltà massima che può uscire. Massimo: 10
     * MIN_DIFFICULTY deve essere sempre minore o uguale a MAX_DIFFICULTY.
     * */
-    public static final int MIN_DIFFICULTY = 5;
-    public static final int MAX_DIFFICULTY = 8;
+    public static final int MIN_DIFFICULTY = 6;
+    public static final int MAX_DIFFICULTY = 7;
 
     // Armature
     /*
