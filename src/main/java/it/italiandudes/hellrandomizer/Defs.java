@@ -192,7 +192,7 @@ public final class Defs {
                     }
             ),
             new PlayerData(
-                    "Manta", true,
+                    "Manta", false,
                     ArmorCategory.values(),
                     true,
                     new ArmorBuff[] {
@@ -219,8 +219,7 @@ public final class Defs {
                     },
                     true,
                     new Stratagem[] {
-                            Stratagem.CODE_AFLAM40_FLAME_SENTRY,
-                            Stratagem.CODE_MD8_GAS_MINES
+                            Stratagem.CODE_AFLAM40_FLAME_SENTRY
                     },
                     true,
                     new Booster[] {
@@ -228,19 +227,17 @@ public final class Defs {
                     }
             ),
             new PlayerData(
-                    "Tonno", false,
+                    "Tonno", true,
                     ArmorCategory.values(),
                     true,
                     new ArmorBuff[] {
                             ArmorBuff.ADVANCED_FILTRATION,
-                            ArmorBuff.INFLAMMABLE,
                             ArmorBuff.PEAK_PHYSIQUE,
                             ArmorBuff.UNFLINCHING,
                             ArmorBuff.SERVO_ASSISTED
                     },
                     true,
                     new PrimaryWeapon[] {
-                            PrimaryWeapon.AR23C_LIBERATOR_PERCUSSIVE,
                             PrimaryWeapon.STA52_ASSALT_RIFLE,
                             PrimaryWeapon.AR23A_LIBERATOR_CARBINE,
                             PrimaryWeapon.AR61_TENDERIZER,
@@ -248,23 +245,18 @@ public final class Defs {
                             PrimaryWeapon.SMG32_REPRIMAND,
                             PrimaryWeapon.SMG72_PUMMELER,
                             PrimaryWeapon.SG20_HALT,
-                            PrimaryWeapon.SG451_COOKOUT,
                             PrimaryWeapon.SG225IE_BREAKER_INCENDIARY,
-                            PrimaryWeapon.ARC12_BLITZER,
                             PrimaryWeapon.LAS17_DOUBLE_EDGE_SICKLE,
                             PrimaryWeapon.PLAS101_PURIFIER,
-                            PrimaryWeapon.FLAM66_TORCHER,
                             PrimaryWeapon.JAR5_DOMINATOR
                     },
                     true,
                     new SecondaryWeapon[] {
                             SecondaryWeapon.P113_VERDICT,
-                            SecondaryWeapon.P4_SENATOR,
                             SecondaryWeapon.CQC30_STUN_BATON,
                             SecondaryWeapon.CQC5_COMBAT_HATCHET,
                             SecondaryWeapon.P11_STIM_PISTOL,
                             SecondaryWeapon.SG22_BUSHWHACKER,
-                            SecondaryWeapon.P72_CRISPER,
                             SecondaryWeapon.GP31_ULTIMATUM,
                             SecondaryWeapon.PLAS15_LOYALIST
                     },
@@ -280,8 +272,7 @@ public final class Defs {
                     new Stratagem[] {
                             Stratagem.CODE_TX41_STERILIZER,
                             Stratagem.CODE_AXTX13_GUARD_DOG_DOG_BREATH,
-                            Stratagem.CODE_B100_PORTABLE_HELLBOMB,
-                            Stratagem.CODE_MD8_GAS_MINES
+                            Stratagem.CODE_B100_PORTABLE_HELLBOMB
                     },
                     true,
                     new Booster[] {
@@ -356,6 +347,55 @@ public final class Defs {
                             Booster.FIREBOMB_HELLPODS,
                             Booster.ARMED_RESUPPLY_PODS
                     }
+            ),
+            new PlayerData(
+                    "Edoardo", true,
+                    ArmorCategory.values(),
+                    false,
+                    new ArmorBuff[] {
+                            ArmorBuff.SCOUT,
+                            ArmorBuff.DEMOCRACY_PROTECTS,
+                            ArmorBuff.ENGINEERING_KIT,
+                            ArmorBuff.MEDKIT,
+                            ArmorBuff.EXTRA_PADDING,
+                            ArmorBuff.FORTIFIED
+                    },
+                    false,
+                    new PrimaryWeapon[] {
+                            PrimaryWeapon.AR23_LIBERATOR,
+                            PrimaryWeapon.R2124_CONSTITUTION,
+                            PrimaryWeapon.R63_DILIGENCE,
+                            PrimaryWeapon.SMG37_DEFENDER,
+                            PrimaryWeapon.SG8_PUNISHER,
+                            PrimaryWeapon.LAS5_SCYTHE
+                    },
+                    false,
+                    new SecondaryWeapon[] {
+                            SecondaryWeapon.P2_PEACEMAKER,
+                            SecondaryWeapon.P19_REDEEMER
+                    },
+                    false,
+                    new ThrowableWeapon[] {
+                            ThrowableWeapon.G6_FRAG,
+                            ThrowableWeapon.G12_HIGH_EXPLOSIVE
+                    },
+                    false,
+                    new Stratagem[] {
+                            Stratagem.CODE_MG43_MACHINE_GUN,
+                            Stratagem.ORBITAL_380MM_HE_BARRAGE,
+                            Stratagem.EAGLE_STRAFING_RUN,
+                            Stratagem.EAGLE_AIRSTRIKE,
+                            Stratagem.EAGLE_NAPALM_AIRSTRIKE,
+                            Stratagem.ORBITAL_PRECISION_STRIKE,
+                            Stratagem.CODE_AM23_EMS_MORTAR_SENTRY,
+                            Stratagem.CODE_AM12_MORTAR_SENTRY,
+                            Stratagem.CODE_AXAR23_GUARD_DOG
+                    },
+                    false,
+                    new Booster[] {
+                            Booster.HELLPOD_SPACE_OPTIMIZATION,
+                            Booster.VITALITY_ENHANCEMENT
+                    }
             )
     ));
 
@@ -381,7 +421,7 @@ public final class Defs {
      * Scelte: true | false
      * DEFAULT: true
      * */
-    public static final boolean RANDOMIZE_DIFFICULTY = true;
+    public static final boolean RANDOMIZE_DIFFICULTY = false;
 
     /*
     * Permette di impostare il range di difficoltà che il Randomizer può randomizzare.
