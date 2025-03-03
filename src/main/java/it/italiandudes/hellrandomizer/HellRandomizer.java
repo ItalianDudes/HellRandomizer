@@ -1,13 +1,20 @@
 package it.italiandudes.hellrandomizer;
 
-import it.italiandudes.hellrandomizer.enums.Booster;
-import it.italiandudes.hellrandomizer.enums.Enemy;
-import it.italiandudes.hellrandomizer.enums.Stratagem;
+import it.italiandudes.hellrandomizer.javafx.Client;
+import it.italiandudes.hellrandomizer.utils.Defs;
+import it.italiandudes.hellrandomizer.data.PlayerData;
+import it.italiandudes.hellrandomizer.utils.Randomizer;
+import it.italiandudes.hellrandomizer.data.enums.Booster;
+import it.italiandudes.hellrandomizer.data.enums.Enemy;
+import it.italiandudes.hellrandomizer.data.enums.Stratagem;
+import it.italiandudes.idl.common.InfoFlags;
+import it.italiandudes.idl.common.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.function.Predicate;
 
 @SuppressWarnings({"DataFlowIssue", "ConstantValue"})
 public final class HellRandomizer {
@@ -21,6 +28,34 @@ public final class HellRandomizer {
             System.setOut(new PrintStream(System.out, true, "UTF-8"));
         } catch (IOException e) {
             System.err.println("Impossibile impostare la console su Charset UTF-8.");
+        }
+
+        if (Arrays.stream(args).noneMatch(Predicate.isEqual(Defs.START_ARG_NOGUI))) {
+            // Initializing the logger
+            try {
+                Logger.init();
+                Logger.log("Logger initialized!", Defs.LOGGER_CONTEXT);
+            } catch (IOException e) {
+                Logger.log("An error has occurred during Logger initialization, exit...", Defs.LOGGER_CONTEXT);
+                return;
+            }
+
+            // Configure the shutdown hooks
+            Logger.log("Configuring Shutdown Hooks...", Defs.LOGGER_CONTEXT);
+            Runtime.getRuntime().addShutdownHook(new Thread(Logger::close));
+            Logger.log("Shutdown Hooks configured!", Defs.LOGGER_CONTEXT);
+
+            // Start the client
+            try {
+                Logger.log("Starting UI...", Defs.LOGGER_CONTEXT);
+                Client.start(args);
+            } catch (NoClassDefFoundError e) {
+                Logger.log("ERROR: TO RUN THIS JAR YOU NEED JAVA 8 WITH BUILT-IN JAVAFX!", new InfoFlags(true, true, true, true), Defs.LOGGER_CONTEXT);
+                Logger.log(e, Defs.LOGGER_CONTEXT);
+                Logger.close();
+                System.exit(-1);
+            }
+            return;
         }
 
         // Add a flag to all Super Earth Enabled Stratagems and Boosters

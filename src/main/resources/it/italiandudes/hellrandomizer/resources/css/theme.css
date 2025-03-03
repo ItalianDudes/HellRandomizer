@@ -1,0 +1,33 @@
+/*
+color-background: #252525;
+color-super-earth: #5AAECA;
+color-terminids: #FFCA00;
+color-automatons: #FF4E4E;
+color-illuminates: #861BFF;
+*/
+
+/* Fonts */
+@font-face {
+    font-family: 'FS Sinclair Medium';
+    src: url('../font/FS_Sinclair_Medium.ttf');
+}
+
+@font-face {
+    font-family: 'Swiss 721 Extended';
+    /*NOTE: this font is bold by default */
+    src: url('../font/Swiss_721_Extended.ttf');
+}
+
+/* Root */
+.root {
+    -fx-font-family: 'FS Sinclair Medium';
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-background: #252525;
+    -fx-base: #252525;
+}
+
+.tabTitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+}

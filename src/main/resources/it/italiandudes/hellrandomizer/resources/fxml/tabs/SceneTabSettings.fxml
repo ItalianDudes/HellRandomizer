@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--suppress JavaFxDefaultTag -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.italiandudes.hellrandomizer.javafx.controllers.tabs.ControllerSceneTabSettings">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <GridPane layoutX="5.0" layoutY="5.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints valignment="CENTER" vgrow="NEVER" />
+            <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label styleClass="tabTitle" text="IMPOSTAZIONI RANDOMIZZATORE" />
+            <ScrollPane fitToHeight="true" fitToWidth="true" GridPane.rowIndex="1">
+               <content>
+                  <GridPane fx:id="gridPaneSettings" disable="true" vgap="10.0">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <GridPane hgap="10.0" vgap="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="LEFT" hgrow="NEVER" />
+                            <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Randomizza Nemici" />
+                              <Label text="Blacklist Nemici" GridPane.rowIndex="1" />
+                              <Label text="Randomizza Difficolta'" GridPane.rowIndex="2" />
+                              <Label text="Difficolta' Minima" GridPane.rowIndex="3" />
+                              <Label text="Difficolta' Massima" GridPane.rowIndex="4" />
+                              <Label text="Criterio Randomizzazione Armatura" GridPane.rowIndex="5" />
+                              <Label text="Criterio Randomizzazione Arma Primaria" GridPane.rowIndex="6" />
+                              <Label text="Criterio Randomizzazione Arma Secondaria" GridPane.rowIndex="7" />
+                              <Label text="Criterio Randomizzazione Arma Lanciabile" GridPane.rowIndex="8" />
+                              <Label text="Criterio Randomizzazione Stratagemmi" GridPane.rowIndex="9" />
+                              <Label text="Randomizza Potenziamenti" GridPane.rowIndex="10" />
+                              <ToggleButton fx:id="toggleButtonRandomizeEnemies" mnemonicParsing="false" onAction="#stageChanges" GridPane.columnIndex="1">
+                                 <graphic>
+                                    <ImageView fx:id="imageViewToggleRandomizeEnemies" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </ToggleButton>
+                              <GridPane alignment="CENTER_RIGHT" hgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
+                                  <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <ToggleButton fx:id="toggleButtonBlacklistTerminids" mnemonicParsing="false" onAction="#stageChanges">
+                                       <graphic>
+                                          <AnchorPane>
+                                             <children>
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <image>
+                                                      <Image url="@../../image/terminids.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <ImageView fx:id="imageViewBlacklistTerminids" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <image>
+                                                      <Image url="@../../image/delete.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </graphic>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonBlacklistAutomatons" mnemonicParsing="false" onAction="#stageChanges" GridPane.columnIndex="1">
+                                       <graphic>
+                                          <AnchorPane>
+                                             <children>
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <image>
+                                                      <Image url="@../../image/automaton.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <ImageView fx:id="imageViewBlacklistAutomatons" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <image>
+                                                      <Image url="@../../image/delete.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </graphic>
+                                    </ToggleButton>
+                                    <ToggleButton fx:id="toggleButtonBlacklistIlluminates" mnemonicParsing="false" onAction="#stageChanges" GridPane.columnIndex="2">
+                                       <graphic>
+                                          <AnchorPane>
+                                             <children>
+                                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <image>
+                                                      <Image url="@../../image/illuminates.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <ImageView fx:id="imageViewBlacklistIlluminates" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <image>
+                                                      <Image url="@../../image/delete.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </graphic>
+                                    </ToggleButton>
+                                 </children>
+                              </GridPane>
+                              <ToggleButton fx:id="toggleButtonRandomizeDifficulty" mnemonicParsing="false" onAction="#stageChanges" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fx:id="imageViewToggleRandomizeDifficulty" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </ToggleButton>
+                              <Spinner fx:id="spinnerMinDifficulty" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Spinner fx:id="spinnerMaxDifficulty" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ToggleButton fx:id="toggleButtonRandomizeBoosters" mnemonicParsing="false" onAction="#stageChanges" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                 <graphic>
+                                    <ImageView fx:id="imageViewToggleRandomizeBoosters" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                                 </graphic>
+                              </ToggleButton>
+                              <ComboBox fx:id="comboBoxArmorRandomizationProcedure" onAction="#stageChanges" promptText="Seleziona un Criterio" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <ComboBox fx:id="comboBoxPrimaryWeaponRandomizationProcedure" onAction="#stageChanges" promptText="Seleziona un Criterio" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <ComboBox fx:id="comboBoxSecondaryWeaponRandomizationProcedure" onAction="#stageChanges" promptText="Seleziona un Criterio" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <ComboBox fx:id="comboBoxThrowableWeaponRandomizationProcedure" onAction="#stageChanges" promptText="Seleziona un Criterio" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <ComboBox fx:id="comboBoxStratagemsRandomizationProcedure" onAction="#stageChanges" promptText="Seleziona un Criterio" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                           </children>
+                        </GridPane>
+                        <GridPane hgap="10.0" vgap="5.0" GridPane.rowIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                              <ColumnConstraints halignment="CENTER" hgrow="NEVER" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints valignment="CENTER" vgrow="NEVER" />
+                              <RowConstraints valignment="CENTER" vgrow="NEVER" />
+                            <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                              <RowConstraints valignment="CENTER" vgrow="NEVER" />
+                              <RowConstraints valignment="CENTER" vgrow="NEVER" />
+                              <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="STRATAGEMMI ATTIVATI DALLA SUPER TERRA" />
+                              <TextField fx:id="textFieldSearchFromStratagemsEnabledBySuperEarth" promptText="Cerca..." GridPane.rowIndex="1" />
+                              <ListView fx:id="listViewStratagemsEnabledBySuperEarth" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" GridPane.rowIndex="2" />
+                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addToStratagemsEnabledBySuperEarth">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+                                             <image>
+                                                <Image url="@../../image/arrow-right.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#removeFromStratagemsEnabledBySuperEarth" GridPane.rowIndex="1">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../image/arrow-right.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                              <Label text="LISTA STRATAGEMMI" GridPane.columnIndex="2" />
+                              <TextField fx:id="textFieldSearchFromStratagemsList" promptText="Cerca..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <ListView fx:id="listViewStratagems" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Label text="POTENZIAMENTI ATTIVATI DALLA SUPER TERRA" GridPane.rowIndex="3" />
+                              <Label text="LISTA POTENZIAMENTI" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <TextField fx:id="textFieldSearchFromBoostersEnabledBySuperEarth" promptText="Cerca..." GridPane.rowIndex="4" />
+                              <TextField fx:id="textFieldSearchFromBoostersList" promptText="Cerca..." GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                              <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                    <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addToBoostersEnabledBySuperEarth">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+                                             <image>
+                                                <Image url="@../../image/arrow-right.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#removeFromBoostersEnabledBySuperEarth" GridPane.rowIndex="1">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../image/arrow-right.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                              <ListView fx:id="listViewBoostersEnabledBySuperEarth" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" GridPane.rowIndex="5" />
+                              <ListView fx:id="listViewBoosters" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                           </children>
+                        </GridPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </GridPane>
+               </content></ScrollPane>
+            <GridPane hgap="10.0" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="buttonRevertChanges" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#revertChanges" text="ANNULLA MODIFICHE" />
+                  <Button fx:id="buttonSaveChanges" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveChanges" text="SALVA MODIFICHE" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

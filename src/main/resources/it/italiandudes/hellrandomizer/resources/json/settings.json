@@ -1,0 +1,15 @@
+{
+  "randomizeEnemy": true,
+  "enemyBlacklist": [],
+  "randomizeDifficulty": true,
+  "minimumDifficulty": 1,
+  "maximumDifficulty": 10,
+  "armorRandomizationProcedure": 2,
+  "primaryWeaponRandomizationProcedure": 2,
+  "secondaryWeaponRandomizationProcedure": 2,
+  "throwableWeaponRandomizationProcedure": 2,
+  "stratagemsRandomizationProcedure": 7,
+  "stratagemsEnabledBySuperEarth": [],
+  "randomizeBoosters": true,
+  "boostersEnabledBySuperEarth": []
+}
