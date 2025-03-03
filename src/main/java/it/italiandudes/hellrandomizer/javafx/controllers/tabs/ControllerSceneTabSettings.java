@@ -41,10 +41,26 @@ public final class ControllerSceneTabSettings {
 
     // Attributes
     private boolean initializationCompleted = false;
-    private final ObservableList<Stratagem> stratagems = FXCollections.observableArrayList();
-    private final ObservableList<Stratagem> stratagemsEnabledBySuperEarth = FXCollections.observableArrayList();
-    private final ObservableList<Booster> boosters = FXCollections.observableArrayList();
-    private final ObservableList<Booster> boostersEnabledBySuperEarth = FXCollections.observableArrayList();
+    @NotNull private final ObservableList<Stratagem> stratagems = FXCollections.observableArrayList();
+    @NotNull private final FilteredList<Stratagem> filteredStratagems =new FilteredList<>(
+            this.stratagems,
+            stratagem -> true
+    );
+    @NotNull private final ObservableList<Stratagem> stratagemsEnabledBySuperEarth = FXCollections.observableArrayList();
+    @NotNull private final FilteredList<Stratagem> filteredStratagemsEnabledBySuperEarth = new FilteredList<>(
+            this.stratagemsEnabledBySuperEarth,
+            stratagem -> true
+    );
+    @NotNull private final ObservableList<Booster> boosters = FXCollections.observableArrayList();
+    @NotNull private final FilteredList<Booster> filteredBoosters = new FilteredList<>(
+            this.boosters,
+            booster -> true
+    );
+    @NotNull private final ObservableList<Booster> boostersEnabledBySuperEarth = FXCollections.observableArrayList();
+    @NotNull private final FilteredList<Booster> filteredBoostersEnabledBySuperEarth = new FilteredList<>(
+            this.boostersEnabledBySuperEarth,
+            booster -> true
+    );
 
     // Graphic Elements
     @FXML private GridPane gridPaneSettings;
@@ -103,30 +119,18 @@ public final class ControllerSceneTabSettings {
                 comboBoxSecondaryWeaponRandomizationProcedure.getItems().addAll(SecondaryWeaponRandomizationProcedure.values());
                 comboBoxThrowableWeaponRandomizationProcedure.getItems().addAll(ThrowableWeaponRandomizationProcedure.values());
                 comboBoxStratagemsRandomizationProcedure.getItems().addAll(StratagemsRandomizationProcedure.values());
-                FilteredList<Stratagem> stratagemsEnabledBySuperEarth = new FilteredList<>(
-                        this.stratagemsEnabledBySuperEarth,
-                        stratagem -> true
-                );
-                listViewStratagemsEnabledBySuperEarth.setItems(stratagemsEnabledBySuperEarth);
-                FilteredList<Stratagem> stratagems = new FilteredList<>(
-                        this.stratagems,
-                        stratagem -> true
-                );
-                listViewStratagems.setItems(stratagems);
-                FilteredList<Booster> boostersEnabledBySuperEarth = new FilteredList<>(
-                        this.boostersEnabledBySuperEarth,
-                        booster -> true
-                );
-                listViewBoostersEnabledBySuperEarth.setItems(boostersEnabledBySuperEarth);
-                FilteredList<Booster> boosters = new FilteredList<>(
-                        this.boosters,
-                        booster -> true
-                );
-                listViewBoosters.setItems(boosters);
-                textFieldSearchFromStratagemsEnabledBySuperEarth.textProperty().addListener((observable, oldValue, newValue) -> ((FilteredList<Stratagem>) listViewStratagemsEnabledBySuperEarth.getItems()).setPredicate(stratagem -> stratagem.toString().toLowerCase().contains(newValue.toLowerCase())));
-                textFieldSearchFromStratagemsList.textProperty().addListener((observable, oldValue, newValue) -> ((FilteredList<Stratagem>) listViewStratagems.getItems()).setPredicate(stratagem -> stratagem.toString().toLowerCase().contains(newValue.toLowerCase())));
-                textFieldSearchFromBoostersEnabledBySuperEarth.textProperty().addListener((observable, oldValue, newValue) -> ((FilteredList<Booster>) listViewBoostersEnabledBySuperEarth.getItems()).setPredicate(booster -> booster.toString().toLowerCase().contains(newValue.toLowerCase())));
-                textFieldSearchFromBoostersList.textProperty().addListener((observable, oldValue, newValue) -> ((FilteredList<Booster>) listViewBoosters.getItems()).setPredicate(booster -> booster.toString().toLowerCase().contains(newValue.toLowerCase())));
+                listViewStratagemsEnabledBySuperEarth.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                listViewStratagemsEnabledBySuperEarth.setItems(filteredStratagemsEnabledBySuperEarth);
+                listViewStratagems.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                listViewStratagems.setItems(filteredStratagems);
+                listViewBoostersEnabledBySuperEarth.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                listViewBoostersEnabledBySuperEarth.setItems(filteredBoostersEnabledBySuperEarth);
+                listViewBoosters.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                listViewBoosters.setItems(filteredBoosters);
+                textFieldSearchFromStratagemsEnabledBySuperEarth.textProperty().addListener((observable, oldValue, newValue) -> filteredStratagemsEnabledBySuperEarth.setPredicate(stratagem -> stratagem.toString().toLowerCase().contains(newValue.toLowerCase())));
+                textFieldSearchFromStratagemsList.textProperty().addListener((observable, oldValue, newValue) -> filteredStratagems.setPredicate(stratagem -> stratagem.toString().toLowerCase().contains(newValue.toLowerCase())));
+                textFieldSearchFromBoostersEnabledBySuperEarth.textProperty().addListener((observable, oldValue, newValue) -> filteredBoostersEnabledBySuperEarth.setPredicate(booster -> booster.toString().toLowerCase().contains(newValue.toLowerCase())));
+                textFieldSearchFromBoostersList.textProperty().addListener((observable, oldValue, newValue) -> filteredBoosters.setPredicate(booster -> booster.toString().toLowerCase().contains(newValue.toLowerCase())));
                 loadDataFromSettings();
                 spinnerMinDifficulty.getEditor().textProperty().addListener(observable -> stageChanges());
                 spinnerMaxDifficulty.getEditor().textProperty().addListener(observable -> stageChanges());
@@ -182,7 +186,6 @@ public final class ControllerSceneTabSettings {
         comboBoxThrowableWeaponRandomizationProcedure.getSelectionModel().select(Settings.getSettings().getInt(Defs.SettingsKeys.THROWABLE_WEAPON_RANDOMIZATION_PROCEDURE));
         comboBoxStratagemsRandomizationProcedure.getSelectionModel().select(Settings.getSettings().getInt(Defs.SettingsKeys.STRATAGEMS_RANDOMIZATION_PROCEDURE));
         toggleButtonRandomizeBoosters.setSelected(Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_BOOSTERS));
-
         this.stratagemsEnabledBySuperEarth.clear();
         this.stratagems.clear();
         JSONArray stratagemsEnabledBySuperEarth = Settings.getSettings().getJSONArray(Defs.SettingsKeys.STRATAGEMS_ENABLED_BY_SUPER_EARTH);
@@ -213,13 +216,37 @@ public final class ControllerSceneTabSettings {
         disableChangesButton();
     }
     @FXML
-    private void addToStratagemsEnabledBySuperEarth() {}
+    private void addToStratagemsEnabledBySuperEarth() {
+        ObservableList<Stratagem> selection = listViewStratagems.getSelectionModel().getSelectedItems();
+        if (selection == null) return;
+        stratagemsEnabledBySuperEarth.addAll(selection);
+        stratagems.removeAll(selection);
+        stageChanges();
+    }
     @FXML
-    private void removeFromStratagemsEnabledBySuperEarth() {}
+    private void removeFromStratagemsEnabledBySuperEarth() {
+        ObservableList<Stratagem> selection = listViewStratagemsEnabledBySuperEarth.getSelectionModel().getSelectedItems();
+        if (selection == null) return;
+        stratagems.addAll(selection);
+        stratagemsEnabledBySuperEarth.removeAll(selection);
+        stageChanges();
+    }
     @FXML
-    private void addToBoostersEnabledBySuperEarth() {}
+    private void addToBoostersEnabledBySuperEarth() {
+        ObservableList<Booster> selection = listViewBoosters.getSelectionModel().getSelectedItems();
+        if (selection == null) return;
+        boostersEnabledBySuperEarth.addAll(selection);
+        boosters.removeAll(selection);
+        stageChanges();
+    }
     @FXML
-    private void removeFromBoostersEnabledBySuperEarth() {}
+    private void removeFromBoostersEnabledBySuperEarth() {
+        ObservableList<Booster> selection = listViewBoostersEnabledBySuperEarth.getSelectionModel().getSelectedItems();
+        if (selection == null) return;
+        boosters.addAll(selection);
+        boostersEnabledBySuperEarth.removeAll(selection);
+        stageChanges();
+    }
     @FXML
     private void saveChanges() {
         disableChangesButton();
@@ -258,7 +285,17 @@ public final class ControllerSceneTabSettings {
         Settings.getSettings().put(Defs.SettingsKeys.SECONDARY_WEAPON_RANDOMIZATION_PROCEDURE, comboBoxSecondaryWeaponRandomizationProcedure.getSelectionModel().getSelectedItem().ordinal());
         Settings.getSettings().put(Defs.SettingsKeys.THROWABLE_WEAPON_RANDOMIZATION_PROCEDURE, comboBoxThrowableWeaponRandomizationProcedure.getSelectionModel().getSelectedItem().ordinal());
         Settings.getSettings().put(Defs.SettingsKeys.STRATAGEMS_RANDOMIZATION_PROCEDURE, comboBoxStratagemsRandomizationProcedure.getSelectionModel().getSelectedItem().ordinal());
+        JSONArray stratagemsEnabledBySuperEarth = new JSONArray();
+        for (Stratagem stratagem : this.stratagemsEnabledBySuperEarth) {
+            stratagemsEnabledBySuperEarth.put(stratagem.ordinal());
+        }
+        Settings.getSettings().put(Defs.SettingsKeys.STRATAGEMS_ENABLED_BY_SUPER_EARTH, stratagemsEnabledBySuperEarth);
         Settings.getSettings().put(Defs.SettingsKeys.RANDOMIZE_BOOSTERS, toggleButtonRandomizeBoosters.isSelected());
+        JSONArray boostersEnabledBySuperEarth = new JSONArray();
+        for (Booster booster : this.boostersEnabledBySuperEarth) {
+            boostersEnabledBySuperEarth.put(booster.ordinal());
+        }
+        Settings.getSettings().put(Defs.SettingsKeys.BOOSTERS_ENABLED_BY_SUPER_EARTH, boostersEnabledBySuperEarth);
         JFXDefs.startServiceTask(() -> {
             try {
                 Settings.writeJSONSettings();
