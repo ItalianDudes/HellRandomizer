@@ -471,6 +471,35 @@ public final class ControllerSceneTabPlayersData {
             listViewHelldiversData.getItems().add(newData);
             listViewHelldiversData.getSelectionModel().select(newData);
             disableChangesButton();
+        } else {
+            HelldiverData helldiverData = listViewHelldiversData.getSelectionModel().getSelectedItem();
+            if (helldiverData == null) {
+                new ErrorAlert("ERRORE", "Errore di Salvataggio", "E' stato premuto il tasto di salvataggio senza però avere un helldiver selezionato.");
+                newHelldiver = null;
+                return;
+            }
+            helldiverData.setEnrolledForRandomizer(toggleButtonRandomizePlayer.isSelected());
+
+            helldiverData.getArmorBuffs().removeIf(any -> true);
+            helldiverData.getArmorBuffs().addAll(helldiverArmorBuffs);
+
+            helldiverData.getPrimaryWeapons().removeIf(any -> true);
+            helldiverData.getPrimaryWeapons().addAll(helldiverPrimaryWeapons);
+            helldiverData.updatePrimaryWeaponTypes();
+
+            helldiverData.getSecondaryWeapons().removeIf(any -> true);
+            helldiverData.getSecondaryWeapons().addAll(helldiverSecondaryWeapons);
+            helldiverData.updateSecondaryWeaponTypes();
+
+            helldiverData.getThrowableWeapons().removeIf(any -> true);
+            helldiverData.getThrowableWeapons().addAll(helldiverThrowableWeapons);
+            helldiverData.updateThrowableWeaponTypes();
+
+            helldiverData.getStratagems().removeIf(any -> true);
+            helldiverData.getStratagems().addAll(helldiverStratagems);
+
+            helldiverData.getBoosters().removeIf(any -> true);
+            helldiverData.getBoosters().addAll(helldiverBoosters);
         }
         newHelldiver = null;
         JFXDefs.startServiceTask(() -> {

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
@@ -16,17 +17,17 @@ public final class HelldiverData {
 
     // Attributes
     @NotNull private final String name;
-    private final boolean enrolledForRandomizer;
+    private boolean enrolledForRandomizer;
     private final ArmorCategory @NotNull[] armorCategories;
-    private final ArmorBuff @NotNull[] armorBuffs;
-    private final PrimaryWeaponType @NotNull[] primaryWeaponTypes;
-    private final PrimaryWeapon @NotNull[] primaryWeapons;
-    private final SecondaryWeaponType @NotNull[] secondaryWeaponTypes;
-    private final SecondaryWeapon @NotNull[] secondaryWeapons;
-    private final ThrowableWeaponType @NotNull[] throwableWeaponTypes;
-    private final ThrowableWeapon @NotNull[] throwableWeapons;
-    private final Stratagem @NotNull[] stratagems;
-    @NotNull private final HashSet<@NotNull Booster> boosters;
+    @NotNull private final Set<@NotNull ArmorBuff> armorBuffs;
+    @NotNull private final Set<@NotNull PrimaryWeaponType> primaryWeaponTypes;
+    @NotNull private final Set<@NotNull PrimaryWeapon> primaryWeapons;
+    @NotNull private final Set<@NotNull SecondaryWeaponType> secondaryWeaponTypes;
+    @NotNull private final Set<@NotNull SecondaryWeapon> secondaryWeapons;
+    @NotNull private final Set<@NotNull ThrowableWeaponType> throwableWeaponTypes;
+    @NotNull private final Set<@NotNull ThrowableWeapon> throwableWeapons;
+    @NotNull private final Set<@NotNull Stratagem> stratagems;
+    @NotNull private final Set<@NotNull Booster> boosters;
 
     // Constructors
     public HelldiverData(
@@ -42,31 +43,31 @@ public final class HelldiverData {
         this.armorCategories = armorCategories;
 
         if (armorBuffsAsBlacklist) {
-            this.armorBuffs = armorBuffs != null ? Arrays.stream(ArmorBuff.values()).filter(element -> !Arrays.asList(armorBuffs).contains(element)).toArray(ArmorBuff[]::new) : ArmorBuff.values();
-        } else this.armorBuffs = armorBuffs != null ? armorBuffs : new ArmorBuff[] {};
+            this.armorBuffs = armorBuffs != null ? Arrays.stream(ArmorBuff.values()).filter(element -> !Arrays.asList(armorBuffs).contains(element)).collect(Collectors.toSet()) : Arrays.stream(ArmorBuff.values()).collect(Collectors.toSet());
+        } else this.armorBuffs = armorBuffs != null ? Arrays.stream(armorBuffs).collect(Collectors.toSet()) : new HashSet<>();
 
         if (primaryWeaponsAsBlacklist) {
-            this.primaryWeapons = primaryWeapons != null ? Arrays.stream(PrimaryWeapon.values()).filter(weapon -> !Arrays.asList(primaryWeapons).contains(weapon)).toArray(PrimaryWeapon[]::new) : PrimaryWeapon.values();
-        } else this.primaryWeapons = primaryWeapons != null ? primaryWeapons : new PrimaryWeapon[] {};
-        this.primaryWeaponTypes = Arrays.stream(this.primaryWeapons).map(PrimaryWeapon::getType).distinct().toArray(PrimaryWeaponType[]::new);
+            this.primaryWeapons = primaryWeapons != null ? Arrays.stream(PrimaryWeapon.values()).filter(weapon -> !Arrays.asList(primaryWeapons).contains(weapon)).collect(Collectors.toSet()) : Arrays.stream(PrimaryWeapon.values()).collect(Collectors.toSet());
+        } else this.primaryWeapons = primaryWeapons != null ? Arrays.stream(primaryWeapons).collect(Collectors.toSet()) : new HashSet<>();
+        this.primaryWeaponTypes = this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet());
 
         if (secondaryWeaponsAsBlacklist) {
-            this.secondaryWeapons = secondaryWeapons != null ? Arrays.stream(SecondaryWeapon.values()).filter(weapon -> !Arrays.asList(secondaryWeapons).contains(weapon)).toArray(SecondaryWeapon[]::new) : SecondaryWeapon.values();
-        } else this.secondaryWeapons = secondaryWeapons != null ? secondaryWeapons : new SecondaryWeapon[] {};
-        this.secondaryWeaponTypes = Arrays.stream(this.secondaryWeapons).map(SecondaryWeapon::getType).distinct().toArray(SecondaryWeaponType[]::new);
+            this.secondaryWeapons = secondaryWeapons != null ? Arrays.stream(SecondaryWeapon.values()).filter(weapon -> !Arrays.asList(secondaryWeapons).contains(weapon)).collect(Collectors.toSet()) : Arrays.stream(SecondaryWeapon.values()).collect(Collectors.toSet());
+        } else this.secondaryWeapons = secondaryWeapons != null ? Arrays.stream(secondaryWeapons).collect(Collectors.toSet()) : new HashSet<>();
+        this.secondaryWeaponTypes = this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet());
 
         if (throwableWeaponsBlacklist) {
-            this.throwableWeapons = throwableWeapons != null ? Arrays.stream(ThrowableWeapon.values()).filter(weapon -> !Arrays.asList(throwableWeapons).contains(weapon)).toArray(ThrowableWeapon[]::new) : ThrowableWeapon.values();
-        } else this.throwableWeapons = throwableWeapons != null ? throwableWeapons : new ThrowableWeapon[] {};
-        this.throwableWeaponTypes = Arrays.stream(this.throwableWeapons).map(ThrowableWeapon::getType).distinct().toArray(ThrowableWeaponType[]::new);
+            this.throwableWeapons = throwableWeapons != null ? Arrays.stream(ThrowableWeapon.values()).filter(weapon -> !Arrays.asList(throwableWeapons).contains(weapon)).collect(Collectors.toSet()) : Arrays.stream(ThrowableWeapon.values()).collect(Collectors.toSet());
+        } else this.throwableWeapons = throwableWeapons != null ? Arrays.stream(throwableWeapons).collect(Collectors.toSet()) : new HashSet<>();
+        this.throwableWeaponTypes = this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet());
 
         if (stratagemsAsBlacklist) {
-            this.stratagems = stratagems != null ? Arrays.stream(Stratagem.values()).filter(element -> !Arrays.asList(stratagems).contains(element)).toArray(Stratagem[]::new) : Stratagem.values();
-        } else this.stratagems = stratagems != null ? stratagems : new Stratagem[] {};
+            this.stratagems = stratagems != null ? Arrays.stream(Stratagem.values()).filter(element -> !Arrays.asList(stratagems).contains(element)).collect(Collectors.toSet()) : Arrays.stream(Stratagem.values()).collect(Collectors.toSet());
+        } else this.stratagems = stratagems != null ? Arrays.stream(stratagems).collect(Collectors.toSet()) : new HashSet<>();
 
         if (boostersAsBlacklist) {
-            this.boosters = boosters != null ? new HashSet<>(Arrays.stream(Booster.values()).filter(element -> !Arrays.asList(boosters).contains(element)).collect(Collectors.toList())) : new HashSet<>(Arrays.asList(Booster.values()));
-        } else this.boosters = boosters != null ? new HashSet<>(Arrays.asList(boosters)) : new HashSet<>();
+            this.boosters = boosters != null ? Arrays.stream(Booster.values()).filter(element -> !Arrays.asList(boosters).contains(element)).collect(Collectors.toSet()) : Arrays.stream(Booster.values()).collect(Collectors.toSet());
+        } else this.boosters = boosters != null ? Arrays.stream(boosters).collect(Collectors.toSet()) : new HashSet<>();
     }
     public HelldiverData(@NotNull final JSONObject json) throws JSONException {
         this.name = json.getString("name");
@@ -77,32 +78,32 @@ public final class HelldiverData {
             this.armorCategories[i] = ArmorCategory.values()[armorCategories.getInt(i)];
         }
         JSONArray armorBuffs = json.getJSONArray("armorBuffs");
-        this.armorBuffs = new ArmorBuff[armorBuffs.length()];
+        this.armorBuffs = new HashSet<>();
         for (int i = 0; i < armorBuffs.length(); i++) {
-            this.armorBuffs[i] = ArmorBuff.values()[armorBuffs.getInt(i)];
+            this.armorBuffs.add(ArmorBuff.values()[armorBuffs.getInt(i)]);
         }
         JSONArray primaryWeapons = json.getJSONArray("primaryWeapons");
-        this.primaryWeapons = new PrimaryWeapon[primaryWeapons.length()];
+        this.primaryWeapons = new HashSet<>();
         for (int i = 0; i < primaryWeapons.length(); i++) {
-            this.primaryWeapons[i] = PrimaryWeapon.values()[primaryWeapons.getInt(i)];
+            this.primaryWeapons.add(PrimaryWeapon.values()[primaryWeapons.getInt(i)]);
         }
-        this.primaryWeaponTypes = Arrays.stream(this.primaryWeapons).map(PrimaryWeapon::getType).distinct().toArray(PrimaryWeaponType[]::new);
+        this.primaryWeaponTypes = this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet());
         JSONArray secondaryWeapons = json.getJSONArray("secondaryWeapons");
-        this.secondaryWeapons = new SecondaryWeapon[secondaryWeapons.length()];
+        this.secondaryWeapons = new HashSet<>();
         for (int i = 0; i < secondaryWeapons.length(); i++) {
-            this.secondaryWeapons[i] = SecondaryWeapon.values()[secondaryWeapons.getInt(i)];
+            this.secondaryWeapons.add(SecondaryWeapon.values()[secondaryWeapons.getInt(i)]);
         }
-        this.secondaryWeaponTypes = Arrays.stream(this.secondaryWeapons).map(SecondaryWeapon::getType).distinct().toArray(SecondaryWeaponType[]::new);
+        this.secondaryWeaponTypes = this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet());
         JSONArray throwableWeapons = json.getJSONArray("throwableWeapons");
-        this.throwableWeapons = new ThrowableWeapon[throwableWeapons.length()];
+        this.throwableWeapons = new HashSet<>();
         for (int i = 0; i < throwableWeapons.length(); i++) {
-            this.throwableWeapons[i] = ThrowableWeapon.values()[throwableWeapons.getInt(i)];
+            this.throwableWeapons.add(ThrowableWeapon.values()[throwableWeapons.getInt(i)]);
         }
-        this.throwableWeaponTypes = Arrays.stream(this.throwableWeapons).map(ThrowableWeapon::getType).distinct().toArray(ThrowableWeaponType[]::new);
+        this.throwableWeaponTypes = this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet());
         JSONArray stratagems = json.getJSONArray("stratagems");
-        this.stratagems = new Stratagem[stratagems.length()];
+        this.stratagems = new HashSet<>();
         for (int i = 0; i < stratagems.length(); i++) {
-            this.stratagems[i] = Stratagem.values()[stratagems.getInt(i)];
+            this.stratagems.add(Stratagem.values()[stratagems.getInt(i)]);
         }
         JSONArray boosters = json.getJSONArray("boosters");
         this.boosters = new HashSet<>();
@@ -112,40 +113,55 @@ public final class HelldiverData {
     }
 
     // Methods
+    public void updatePrimaryWeaponTypes() {
+        this.primaryWeaponTypes.removeIf(primaryWeaponType -> true);
+        this.primaryWeaponTypes.addAll(this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet()));
+    }
+    public void updateSecondaryWeaponTypes() {
+        this.secondaryWeaponTypes.removeIf(secondaryWeaponType -> true);
+        this.secondaryWeaponTypes.addAll(this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet()));
+    }
+    public void updateThrowableWeaponTypes() {
+        this.throwableWeaponTypes.removeIf(throwableWeaponType -> true);
+        this.throwableWeaponTypes.addAll(this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet()));
+    }
     public @NotNull String getName() {
         return name;
     }
     public boolean isEnrolledForRandomizer() {
         return enrolledForRandomizer;
     }
+    public void setEnrolledForRandomizer(final boolean enrolledForRandomizer) {
+        this.enrolledForRandomizer = enrolledForRandomizer;
+    }
     public ArmorCategory @NotNull [] getArmorCategories() {
         return armorCategories;
     }
-    public ArmorBuff @NotNull [] getArmorBuffs() {
+    public @NotNull Set<@NotNull ArmorBuff> getArmorBuffs() {
         return armorBuffs;
     }
-    public PrimaryWeaponType @NotNull [] getPrimaryWeaponTypes() {
+    public @NotNull Set<@NotNull PrimaryWeaponType> getPrimaryWeaponTypes() {
         return primaryWeaponTypes;
     }
-    public PrimaryWeapon @NotNull [] getPrimaryWeapons() {
+    public @NotNull Set<@NotNull PrimaryWeapon> getPrimaryWeapons() {
         return primaryWeapons;
     }
-    public SecondaryWeaponType @NotNull [] getSecondaryWeaponTypes() {
+    public @NotNull Set<@NotNull SecondaryWeaponType> getSecondaryWeaponTypes() {
         return secondaryWeaponTypes;
     }
-    public SecondaryWeapon @NotNull [] getSecondaryWeapons() {
+    public @NotNull Set<@NotNull SecondaryWeapon> getSecondaryWeapons() {
         return secondaryWeapons;
     }
-    public ThrowableWeaponType @NotNull [] getThrowableWeaponTypes() {
+    public @NotNull Set<@NotNull ThrowableWeaponType> getThrowableWeaponTypes() {
         return throwableWeaponTypes;
     }
-    public ThrowableWeapon @NotNull [] getThrowableWeapons() {
+    public @NotNull Set<@NotNull ThrowableWeapon> getThrowableWeapons() {
         return throwableWeapons;
     }
-    public Stratagem @NotNull [] getStratagems() {
+    public @NotNull Set<@NotNull Stratagem> getStratagems() {
         return stratagems;
     }
-    public @NotNull HashSet<@NotNull Booster> getBoosters() {
+    public @NotNull Set<@NotNull Booster> getBoosters() {
         return boosters;
     }
     @Override
@@ -153,21 +169,21 @@ public final class HelldiverData {
         if (!(o instanceof HelldiverData)) return false;
 
         HelldiverData that = (HelldiverData) o;
-        return isEnrolledForRandomizer() == that.isEnrolledForRandomizer() && getName().equals(that.getName()) && Arrays.equals(getArmorCategories(), that.getArmorCategories()) && Arrays.equals(getArmorBuffs(), that.getArmorBuffs()) && Arrays.equals(getPrimaryWeaponTypes(), that.getPrimaryWeaponTypes()) && Arrays.equals(getPrimaryWeapons(), that.getPrimaryWeapons()) && Arrays.equals(getSecondaryWeaponTypes(), that.getSecondaryWeaponTypes()) && Arrays.equals(getSecondaryWeapons(), that.getSecondaryWeapons()) && Arrays.equals(getThrowableWeaponTypes(), that.getThrowableWeaponTypes()) && Arrays.equals(getThrowableWeapons(), that.getThrowableWeapons()) && Arrays.equals(getStratagems(), that.getStratagems()) && getBoosters().equals(that.getBoosters());
+        return isEnrolledForRandomizer() == that.isEnrolledForRandomizer() && getName().equals(that.getName()) && Arrays.equals(getArmorCategories(), that.getArmorCategories()) && getArmorBuffs().equals(that.getArmorBuffs()) && getPrimaryWeaponTypes().equals(that.getPrimaryWeaponTypes()) && getPrimaryWeapons().equals(that.getPrimaryWeapons()) && getSecondaryWeaponTypes().equals(that.getSecondaryWeaponTypes()) && getSecondaryWeapons().equals(that.getSecondaryWeapons()) && getThrowableWeaponTypes().equals(that.getThrowableWeaponTypes()) && getThrowableWeapons().equals(that.getThrowableWeapons()) && getStratagems().equals(that.getStratagems()) && getBoosters().equals(that.getBoosters());
     }
     @Override
     public int hashCode() {
         int result = getName().hashCode();
         result = 31 * result + Boolean.hashCode(isEnrolledForRandomizer());
         result = 31 * result + Arrays.hashCode(getArmorCategories());
-        result = 31 * result + Arrays.hashCode(getArmorBuffs());
-        result = 31 * result + Arrays.hashCode(getPrimaryWeaponTypes());
-        result = 31 * result + Arrays.hashCode(getPrimaryWeapons());
-        result = 31 * result + Arrays.hashCode(getSecondaryWeaponTypes());
-        result = 31 * result + Arrays.hashCode(getSecondaryWeapons());
-        result = 31 * result + Arrays.hashCode(getThrowableWeaponTypes());
-        result = 31 * result + Arrays.hashCode(getThrowableWeapons());
-        result = 31 * result + Arrays.hashCode(getStratagems());
+        result = 31 * result + getArmorBuffs().hashCode();
+        result = 31 * result + getPrimaryWeaponTypes().hashCode();
+        result = 31 * result + getPrimaryWeapons().hashCode();
+        result = 31 * result + getSecondaryWeaponTypes().hashCode();
+        result = 31 * result + getSecondaryWeapons().hashCode();
+        result = 31 * result + getThrowableWeaponTypes().hashCode();
+        result = 31 * result + getThrowableWeapons().hashCode();
+        result = 31 * result + getStratagems().hashCode();
         result = 31 * result + getBoosters().hashCode();
         return result;
     }

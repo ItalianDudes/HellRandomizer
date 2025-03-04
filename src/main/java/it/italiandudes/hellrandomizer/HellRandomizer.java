@@ -8,16 +8,17 @@ import it.italiandudes.hellrandomizer.utils.Randomizer;
 import it.italiandudes.hellrandomizer.data.enums.Booster;
 import it.italiandudes.hellrandomizer.data.enums.Enemy;
 import it.italiandudes.hellrandomizer.data.enums.Stratagem;
+import it.italiandudes.hellrandomizer.utils.Settings;
 import it.italiandudes.idl.common.InfoFlags;
 import it.italiandudes.idl.common.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 import java.util.function.Predicate;
 
-@SuppressWarnings({"DataFlowIssue", "ConstantValue"})
 public final class HellRandomizer {
 
     // Attributes
@@ -44,6 +45,9 @@ public final class HellRandomizer {
         Logger.log("Configuring Shutdown Hooks...", Defs.LOGGER_CONTEXT);
         Runtime.getRuntime().addShutdownHook(new Thread(Logger::close));
         Logger.log("Shutdown Hooks configured!", Defs.LOGGER_CONTEXT);
+
+        // Load Settings
+        Settings.loadSettingsFile();
 
         // Load Helldivers Data
         HelldiversDataManager.loadHelldiversDataFile();
@@ -76,19 +80,19 @@ public final class HellRandomizer {
         HelldiverData @NotNull[] boosterSortedHelldiverData = HelldiversDataManager.getHelldiversData().stream().sorted(Comparator.comparingInt(o -> o.getBoosters().size())).toArray(HelldiverData[]::new);
 
         // Difficulty and Enemy Randomizer
-        final boolean randomizeEnemy = Defs.RANDOMIZE_ENEMY && Defs.ENEMY_BLACKLIST.length < Enemy.values().length;
-        if (randomizeEnemy && Defs.RANDOMIZE_DIFFICULTY) {
+        final boolean randomizeEnemy = Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_ENEMY) && Settings.getSettings().getJSONArray(Defs.SettingsKeys.ENEMY_BLACKLIST).length() < Enemy.values().length;
+        if (randomizeEnemy && Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_DIFFICULTY)) {
             System.out.print("\n\n");
             printDecorativeLine();
             System.out.println("Fazione: " + Randomizer.randomizeEnemy());
             System.out.println("Difficoltà: " + Randomizer.randomizeDifficulty());
             printDecorativeLine();
-        } else if (randomizeEnemy && ! Defs.RANDOMIZE_DIFFICULTY) {
+        } else if (randomizeEnemy && ! Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_DIFFICULTY)) {
             System.out.print("\n\n");
             printDecorativeLine();
             System.out.println("Fazione: " + Randomizer.randomizeEnemy());
             printDecorativeLine();
-        } else if (!randomizeEnemy && Defs.RANDOMIZE_DIFFICULTY) {
+        } else if (!randomizeEnemy && Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_DIFFICULTY)) {
             System.out.print("\n\n");
             printDecorativeLine();
             System.out.println("Difficoltà: " + Randomizer.randomizeDifficulty());
@@ -103,19 +107,31 @@ public final class HellRandomizer {
             System.out.print("\n");
             printDecorativeLine();
             System.out.println("Giocatore: " + helldiverData.getName());
-            if (Defs.ARMOR_RANDOMIZATION_PROCEDURE > -1) randomizeArmor(helldiverData);
+            if (Settings.getSettings().getInt(Defs.SettingsKeys.ARMOR_RANDOMIZATION_PROCEDURE) > 0) randomizeArmor(helldiverData);
             randomizeWeaponAndThrowableCategories(helldiverData);
-            if (Defs.STRATAGEMS_RANDOMIZATION_PROCEDURE > -1) randomizeStratagems(helldiverData);
-            if (Defs.RANDOMIZE_BOOSTERS) randomizeBooster(helldiverData);
+            if (Settings.getSettings().getInt(Defs.SettingsKeys.STRATAGEMS_RANDOMIZATION_PROCEDURE) > 0) randomizeStratagems(helldiverData);
+            if (Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_BOOSTERS)) randomizeBooster(helldiverData);
             printDecorativeLine();
             System.out.print("\n\n\n");
         }
+
+        // Close Logger
+        Logger.close();
     }
 
     // Randomization Phases
     private static void randomizeArmor(@NotNull final HelldiverData helldiverData) {
-        switch (Defs.ARMOR_RANDOMIZATION_PROCEDURE) {
-            case 0:
+        switch (Settings.getSettings().getInt(Defs.SettingsKeys.ARMOR_RANDOMIZATION_PROCEDURE)) {
+            case 1:
+                System.out.println("\t-Categoria Armatura: " + Randomizer.randomizeArmorCategory(helldiverData));
+
+                break;
+
+            case 2:
+                System.out.println("\t-Buff Armatura: " + Randomizer.randomizeArmorBuff(helldiverData));
+                break;
+
+            case 3:
                 if (Randomizer.randomFromZeroTo(100) % 2 == 0) { // Category
                     System.out.println("\t-Categoria Armatura: " + Randomizer.randomizeArmorCategory(helldiverData));
                 } else { // Buff
@@ -123,54 +139,46 @@ public final class HellRandomizer {
                 }
                 break;
 
-            case 1:
-                System.out.println("\t-Categoria Armatura: " + Randomizer.randomizeArmorCategory(helldiverData));
-                break;
-
-            case 2:
-                System.out.println("\t-Buff Armatura: " + Randomizer.randomizeArmorBuff(helldiverData));
-                break;
-
             default:
-                System.err.println("ERRORE: Il valore di ARMOR_RANDOMIZATION_PROCEDURE non è nei limiti massimi [-1, 2].");
+                System.err.println("ERRORE: Il valore di ARMOR_RANDOMIZATION_PROCEDURE non è nei limiti massimi [0, 3].");
                 System.exit(0);
         }
     }
     private static void randomizePrimaryWeapon(@NotNull final HelldiverData helldiverData) {
-        switch (Defs.PRIMARY_WEAPON_RANDOMIZATION_PROCEDURE) {
-            case -1: break; // No Randomization
+        switch (Settings.getSettings().getInt(Defs.SettingsKeys.PRIMARY_WEAPON_RANDOMIZATION_PROCEDURE)) {
+            case 0: break; // No Randomization
 
-            case 0:
+            case 1:
                 System.out.println("\t-Categoria Arma Primaria: " + Randomizer.randomizePrimaryWeaponType(helldiverData));
                 break;
 
-            case 1:
+            case 2:
                 System.out.println("\t-Arma Primaria: " + Randomizer.randomizePrimaryWeapon(helldiverData));
                 break;
         }
     }
     private static void randomizeSecondaryWeapon(@NotNull final HelldiverData helldiverData) {
-        switch (Defs.SECONDARY_WEAPON_RANDOMIZATION_PROCEDURE) {
-            case -1: break; // No Randomization
+        switch (Settings.getSettings().getInt(Defs.SettingsKeys.SECONDARY_WEAPON_RANDOMIZATION_PROCEDURE)) {
+            case 0: break; // No Randomization
 
-            case 0:
+            case 1:
                 System.out.println("\t-Categoria Arma Secondaria: " + Randomizer.randomizeSecondaryWeaponType(helldiverData));
                 break;
 
-            case 1:
+            case 2:
                 System.out.println("\t-Arma Secondaria: " + Randomizer.randomizeSecondaryWeapon(helldiverData));
                 break;
         }
     }
     private static void randomizeThrowableWeapon(@NotNull final HelldiverData helldiverData) {
-        switch (Defs.THROWABLE_WEAPON_RANDOMIZATION_PROCEDURE) {
-            case -1: break; // No Randomization
+        switch (Settings.getSettings().getInt(Defs.SettingsKeys.THROWABLE_WEAPON_RANDOMIZATION_PROCEDURE)) {
+            case 0: break; // No Randomization
 
-            case 0:
+            case 1:
                 System.out.println("\t-Categoria Arma Lanciabile: " + Randomizer.randomizeThrowableWeaponType(helldiverData));
                 break;
 
-            case 1:
+            case 2:
                 System.out.println("\t-Arma Lanciabile: " + Randomizer.randomizeThrowableWeapon(helldiverData));
                 break;
         }
@@ -182,18 +190,20 @@ public final class HellRandomizer {
     }
     private static void randomizeStratagems(@NotNull final HelldiverData helldiverData) {
         ArrayList<Stratagem> randomizedStratagems = new ArrayList<>();
-        int maxStratagems = Math.min(4, helldiverData.getStratagems().length);
+        int maxStratagems = Math.min(4, helldiverData.getStratagems().size());
 
         if (maxStratagems > 0) {
-            switch (Defs.STRATAGEMS_RANDOMIZATION_PROCEDURE) {
-                case 0:
+            switch (Settings.getSettings().getInt(Defs.SettingsKeys.STRATAGEMS_RANDOMIZATION_PROCEDURE)) {
+                case 0: break; // No Randomization
+
+                case 1:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) randomizedStratagems.add(stratagem);
                     }
                     break;
 
-                case 1:
+                case 2:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -204,7 +214,7 @@ public final class HellRandomizer {
                     }
                     break;
 
-                case 2:
+                case 3:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -217,7 +227,7 @@ public final class HellRandomizer {
                     }
                     break;
 
-                case 3:
+                case 4:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -230,7 +240,7 @@ public final class HellRandomizer {
                     }
                     break;
 
-                case 4:
+                case 5:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -243,7 +253,7 @@ public final class HellRandomizer {
                     }
                     break;
 
-                case 5:
+                case 6:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -256,7 +266,7 @@ public final class HellRandomizer {
                     }
                     break;
 
-                case 6:
+                case 7:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -270,7 +280,7 @@ public final class HellRandomizer {
                     }
                     break;
 
-                case 7:
+                case 8:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -284,7 +294,7 @@ public final class HellRandomizer {
                     }
                     break;
 
-                case 8:
+                case 9:
                     while (randomizedStratagems.size() < maxStratagems) {
                         Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
@@ -299,7 +309,7 @@ public final class HellRandomizer {
                     break;
 
                 default:
-                    System.err.println("ERRORE: Il valore di STRATAGEMS_RANDOMIZATION_PROCEDURE non è nei limiti massimi [-1, 8].");
+                    System.err.println("ERRORE: Il valore di STRATAGEMS_RANDOMIZATION_PROCEDURE non è nei limiti massimi [0, 9].");
                     System.exit(-1);
             }
             System.out.println("\t-Stratagemmi:");
@@ -323,16 +333,23 @@ public final class HellRandomizer {
         System.out.println("***************************************************************************");
     }
     private static void removeSuperEarthEnabledBoosters() {
+        JSONArray boostersEnabledBySuperEarth = Settings.getSettings().getJSONArray(Defs.SettingsKeys.BOOSTERS_ENABLED_BY_SUPER_EARTH);
+        List<Booster> superEarthEnabledBoosters = new ArrayList<>();
+        for (int i=0; i < boostersEnabledBySuperEarth.length(); i++) {
+            superEarthEnabledBoosters.add(Booster.values()[boostersEnabledBySuperEarth.getInt(i)]);
+        }
         for (HelldiverData helldiverData : HelldiversDataManager.getHelldiversData()) {
-            Arrays.asList(Defs.BOOSTERS_ENABLED_BY_SUPER_EARTH).forEach(helldiverData.getBoosters()::remove);
+            superEarthEnabledBoosters.forEach(helldiverData.getBoosters()::remove);
         }
     }
     private static void flagAllSuperEarthEnabled() {
-        for (Stratagem stratagem : Defs.STRATAGEMS_ENABLED_BY_SUPER_EARTH) {
-            stratagem.setEnabledBySuperEarth(true);
+        JSONArray stratagemsEnabledBySuperEarth = Settings.getSettings().getJSONArray(Defs.SettingsKeys.STRATAGEMS_ENABLED_BY_SUPER_EARTH);
+        for (int i=0; i < stratagemsEnabledBySuperEarth.length(); i++) {
+            Stratagem.values()[stratagemsEnabledBySuperEarth.getInt(i)].setEnabledBySuperEarth(true);
         }
-        for (Booster booster : Defs.BOOSTERS_ENABLED_BY_SUPER_EARTH) {
-            booster.setEnabledBySuperEarth(true);
+        JSONArray boostersEnabledBySuperEarth = Settings.getSettings().getJSONArray(Defs.SettingsKeys.BOOSTERS_ENABLED_BY_SUPER_EARTH);
+        for (int i=0; i < boostersEnabledBySuperEarth.length(); i++) {
+            Booster.values()[boostersEnabledBySuperEarth.getInt(i)].setEnabledBySuperEarth(true);
         }
     }
 }

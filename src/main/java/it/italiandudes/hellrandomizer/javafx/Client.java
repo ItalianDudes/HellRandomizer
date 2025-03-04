@@ -3,7 +3,6 @@ package it.italiandudes.hellrandomizer.javafx;
 import it.italiandudes.hellrandomizer.utils.Defs;
 import it.italiandudes.hellrandomizer.javafx.components.SceneController;
 import it.italiandudes.hellrandomizer.javafx.scene.SceneMain;
-import it.italiandudes.hellrandomizer.utils.Settings;
 import it.italiandudes.hellrandomizer.javafx.utils.ThemeHandler;
 import it.italiandudes.idl.common.Logger;
 import javafx.application.Application;
@@ -67,7 +66,6 @@ public final class Client extends Application {
 
     // Start Method
     public static void start(@NotNull final String[] args) {
-        Settings.loadSettingsFile();
         launch(args);
     }
 
