@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public final class HelldiverData {
 
     // Attributes
-    @NotNull private final String name;
+    @NotNull private String name;
     private boolean enrolledForRandomizer;
     private final ArmorCategory @NotNull[] armorCategories;
     @NotNull private final Set<@NotNull ArmorBuff> armorBuffs;
@@ -127,6 +127,9 @@ public final class HelldiverData {
     }
     public @NotNull String getName() {
         return name;
+    }
+    public void setName(@NotNull final String name) {
+        this.name = name;
     }
     public boolean isEnrolledForRandomizer() {
         return enrolledForRandomizer;

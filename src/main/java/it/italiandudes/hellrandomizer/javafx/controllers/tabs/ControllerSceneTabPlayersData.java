@@ -318,6 +318,28 @@ public final class ControllerSceneTabPlayersData {
 
         HelldiverData data = listViewHelldiversData.getSelectionModel().getSelectedItem();
         if (data != null) {
+            Menu renameHelldiver = new Menu("Rinomina Helldiver");
+            MenuItem rename = new MenuItem();
+            renameHelldiver.getItems().add(rename);
+            TextField field = new TextField();
+            field.setPromptText("Nuovo Nome");
+            rename.setGraphic(field);
+            rename.setOnAction(event1 -> {
+                if (field.getText() == null || field.getText().replace("\t", "").replace(" ", "").isEmpty()) return;
+                data.setName(field.getText());
+                listViewHelldiversData.refresh();
+                JFXDefs.startServiceTask(() -> {
+                    try {
+                        HelldiversDataManager.writeHelldiversDataFile();
+                        Platform.runLater(() -> new InformationAlert("SUCCESSO", "Rinominazione Helldiver", "Rinominazione avvenuta con successo!"));
+                    } catch (IOException e) {
+                        Logger.log(e);
+                        Platform.runLater(() -> new ErrorAlert("ERRORE", "Errore di I/O", "Si e' verificato un errore durante la scrittura dei dati."));
+                    }
+                });
+            });
+            contextMenu.getItems().add(renameHelldiver);
+
             MenuItem delete = new MenuItem("Elimina Helldiver");
             delete.setOnAction(event1 -> {
                 HelldiversDataManager.getHelldiversData().remove(data);
