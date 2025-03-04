@@ -28,10 +28,8 @@ public final class ControllerSceneMain {
     private void initialize() {
         sceneControllerTabRandomizer = SceneTabRandomizer.getScene(this);
         tabRandomizer.setContent(sceneControllerTabRandomizer.getParent());
-
         sceneControllerTabPlayersData = SceneTabPlayersData.getScene(this);
         tabPlayersData.setContent(sceneControllerTabPlayersData.getParent());
-
         sceneControllerTabSettings = SceneTabSettings.getScene(this);
         tabSettings.setContent(sceneControllerTabSettings.getParent());
     }

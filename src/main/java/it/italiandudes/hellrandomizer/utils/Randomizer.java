@@ -1,6 +1,6 @@
 package it.italiandudes.hellrandomizer.utils;
 
-import it.italiandudes.hellrandomizer.data.PlayerData;
+import it.italiandudes.hellrandomizer.data.HelldiverData;
 import it.italiandudes.hellrandomizer.data.enums.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,41 +13,41 @@ import java.util.stream.Collectors;
 public final class Randomizer {
 
     // Public
-    @NotNull public static ArmorCategory randomizeArmorCategory(@NotNull final PlayerData playerData) {
-        return playerData.getArmorCategories()[randomFromZeroTo(playerData.getArmorCategories().length)];
+    @NotNull public static ArmorCategory randomizeArmorCategory(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getArmorCategories()[randomFromZeroTo(helldiverData.getArmorCategories().length)];
     }
-    @NotNull public static ArmorBuff randomizeArmorBuff(@NotNull final PlayerData playerData) {
-        return playerData.getArmorBuffs()[randomFromZeroTo(playerData.getArmorBuffs().length)];
+    @NotNull public static ArmorBuff randomizeArmorBuff(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getArmorBuffs()[randomFromZeroTo(helldiverData.getArmorBuffs().length)];
     }
-    @NotNull public static PrimaryWeapon randomizePrimaryWeapon(@NotNull final PlayerData playerData) {
-        return playerData.getPrimaryWeapons()[randomFromZeroTo(playerData.getPrimaryWeapons().length)];
+    @NotNull public static PrimaryWeapon randomizePrimaryWeapon(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getPrimaryWeapons()[randomFromZeroTo(helldiverData.getPrimaryWeapons().length)];
     }
-    @NotNull public static PrimaryWeaponType randomizePrimaryWeaponType(@NotNull final PlayerData playerData) {
-        return playerData.getPrimaryWeaponTypes()[randomFromZeroTo(playerData.getPrimaryWeaponTypes().length)];
+    @NotNull public static PrimaryWeaponType randomizePrimaryWeaponType(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getPrimaryWeaponTypes()[randomFromZeroTo(helldiverData.getPrimaryWeaponTypes().length)];
     }
-    @NotNull public static SecondaryWeapon randomizeSecondaryWeapon(@NotNull final PlayerData playerData) {
-        return playerData.getSecondaryWeapons()[randomFromZeroTo(playerData.getSecondaryWeapons().length)];
+    @NotNull public static SecondaryWeapon randomizeSecondaryWeapon(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getSecondaryWeapons()[randomFromZeroTo(helldiverData.getSecondaryWeapons().length)];
     }
-    @NotNull public static SecondaryWeaponType randomizeSecondaryWeaponType(@NotNull final PlayerData playerData) {
-        return playerData.getSecondaryWeaponTypes()[randomFromZeroTo(playerData.getSecondaryWeaponTypes().length)];
+    @NotNull public static SecondaryWeaponType randomizeSecondaryWeaponType(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getSecondaryWeaponTypes()[randomFromZeroTo(helldiverData.getSecondaryWeaponTypes().length)];
     }
-    @NotNull public static ThrowableWeapon randomizeThrowableWeapon(@NotNull final PlayerData playerData) {
-        return playerData.getThrowableWeapons()[randomFromZeroTo(playerData.getThrowableWeapons().length)];
+    @NotNull public static ThrowableWeapon randomizeThrowableWeapon(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getThrowableWeapons()[randomFromZeroTo(helldiverData.getThrowableWeapons().length)];
     }
-    @NotNull public static ThrowableWeaponType randomizeThrowableWeaponType(@NotNull final PlayerData playerData) {
-        return playerData.getThrowableWeaponTypes()[randomFromZeroTo(playerData.getThrowableWeaponTypes().length)];
+    @NotNull public static ThrowableWeaponType randomizeThrowableWeaponType(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getThrowableWeaponTypes()[randomFromZeroTo(helldiverData.getThrowableWeaponTypes().length)];
     }
-    @NotNull public static Stratagem randomizeStratagem(@NotNull final PlayerData playerData) {
+    @NotNull public static Stratagem randomizeStratagem(@NotNull final HelldiverData helldiverData) {
         Stratagem stratagem;
         do {
-            stratagem = playerData.getStratagems()[randomFromZeroTo(playerData.getStratagems().length)];
+            stratagem = helldiverData.getStratagems()[randomFromZeroTo(helldiverData.getStratagems().length)];
         } while (stratagem.isEnabledBySuperEarth());
         return stratagem;
     }
-    @NotNull public static Booster randomizeBooster(@NotNull final PlayerData playerData) {
+    @NotNull public static Booster randomizeBooster(@NotNull final HelldiverData helldiverData) {
         Booster booster;
         do {
-            booster = (Booster) playerData.getBoosters().toArray()[randomFromZeroTo(playerData.getBoosters().size())];
+            booster = (Booster) helldiverData.getBoosters().toArray()[randomFromZeroTo(helldiverData.getBoosters().size())];
         } while (booster.isEnabledBySuperEarth());
         return booster;
     }

@@ -5,7 +5,7 @@ import it.italiandudes.hellrandomizer.javafx.JFXDefs;
 import it.italiandudes.hellrandomizer.javafx.alerts.ErrorAlert;
 import it.italiandudes.hellrandomizer.javafx.alerts.InformationAlert;
 import it.italiandudes.hellrandomizer.javafx.controllers.ControllerSceneMain;
-import it.italiandudes.hellrandomizer.javafx.utils.Settings;
+import it.italiandudes.hellrandomizer.utils.Settings;
 import it.italiandudes.hellrandomizer.javafx.utils.UIElementConfigurator;
 import it.italiandudes.hellrandomizer.utils.Defs;
 import it.italiandudes.idl.common.Logger;
@@ -36,8 +36,8 @@ public final class ControllerSceneTabSettings {
     }
 
     // Constants
-    @NotNull private static final Image TICK = new Image(Defs.Resources.getAsStream(JFXDefs.Resources.Image.IMAGE_TICK));
-    @NotNull private static final Image CROSS = new Image(Defs.Resources.getAsStream(JFXDefs.Resources.Image.IMAGE_CROSS));
+    @NotNull private static final Image TICK = JFXDefs.Resources.Image.IMAGE_TICK;
+    @NotNull private static final Image CROSS = JFXDefs.Resources.Image.IMAGE_CROSS;
 
     // Attributes
     private boolean initializationCompleted = false;

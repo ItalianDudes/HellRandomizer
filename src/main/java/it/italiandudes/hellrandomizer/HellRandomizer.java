@@ -2,7 +2,8 @@ package it.italiandudes.hellrandomizer;
 
 import it.italiandudes.hellrandomizer.javafx.Client;
 import it.italiandudes.hellrandomizer.utils.Defs;
-import it.italiandudes.hellrandomizer.data.PlayerData;
+import it.italiandudes.hellrandomizer.data.HelldiverData;
+import it.italiandudes.hellrandomizer.utils.HelldiversDataManager;
 import it.italiandudes.hellrandomizer.utils.Randomizer;
 import it.italiandudes.hellrandomizer.data.enums.Booster;
 import it.italiandudes.hellrandomizer.data.enums.Enemy;
@@ -30,22 +31,29 @@ public final class HellRandomizer {
             System.err.println("Impossibile impostare la console su Charset UTF-8.");
         }
 
+        // Initializing the logger
+        try {
+            Logger.init();
+            Logger.log("Logger initialized!", Defs.LOGGER_CONTEXT);
+        } catch (IOException e) {
+            Logger.log("An error has occurred during Logger initialization, exit...", Defs.LOGGER_CONTEXT);
+            return;
+        }
+
+        // Configure the shutdown hooks
+        Logger.log("Configuring Shutdown Hooks...", Defs.LOGGER_CONTEXT);
+        Runtime.getRuntime().addShutdownHook(new Thread(Logger::close));
+        Logger.log("Shutdown Hooks configured!", Defs.LOGGER_CONTEXT);
+
+        // Load Helldivers Data
+        HelldiversDataManager.loadHelldiversDataFile();
+        if (HelldiversDataManager.getHelldiversData() == null) {
+            Logger.log("Si e' verificato un errore durante il caricamento dei dati", new InfoFlags(true, true));
+            System.exit(0);
+        }
+
+        // Start the client
         if (Arrays.stream(args).noneMatch(Predicate.isEqual(Defs.START_ARG_NOGUI))) {
-            // Initializing the logger
-            try {
-                Logger.init();
-                Logger.log("Logger initialized!", Defs.LOGGER_CONTEXT);
-            } catch (IOException e) {
-                Logger.log("An error has occurred during Logger initialization, exit...", Defs.LOGGER_CONTEXT);
-                return;
-            }
-
-            // Configure the shutdown hooks
-            Logger.log("Configuring Shutdown Hooks...", Defs.LOGGER_CONTEXT);
-            Runtime.getRuntime().addShutdownHook(new Thread(Logger::close));
-            Logger.log("Shutdown Hooks configured!", Defs.LOGGER_CONTEXT);
-
-            // Start the client
             try {
                 Logger.log("Starting UI...", Defs.LOGGER_CONTEXT);
                 Client.start(args);
@@ -65,7 +73,7 @@ public final class HellRandomizer {
         removeSuperEarthEnabledBoosters();
 
         // Sorted Player Data
-        PlayerData @NotNull[] boosterSortedPlayerData = Defs.PLAYERS_DATA.stream().sorted(Comparator.comparingInt(o -> o.getBoosters().size())).toArray(PlayerData[]::new);
+        HelldiverData @NotNull[] boosterSortedHelldiverData = HelldiversDataManager.getHelldiversData().stream().sorted(Comparator.comparingInt(o -> o.getBoosters().size())).toArray(HelldiverData[]::new);
 
         // Difficulty and Enemy Randomizer
         final boolean randomizeEnemy = Defs.RANDOMIZE_ENEMY && Defs.ENEMY_BLACKLIST.length < Enemy.values().length;
@@ -90,37 +98,37 @@ public final class HellRandomizer {
 
         // Player Data Randomizer
         System.out.println("\n");
-        for (PlayerData playerData : boosterSortedPlayerData) {
-            if (!playerData.isEnrolledForRandomizer()) continue;
+        for (HelldiverData helldiverData : boosterSortedHelldiverData) {
+            if (!helldiverData.isEnrolledForRandomizer()) continue;
             System.out.print("\n");
             printDecorativeLine();
-            System.out.println("Giocatore: " + playerData.getName());
-            if (Defs.ARMOR_RANDOMIZATION_PROCEDURE > -1) randomizeArmor(playerData);
-            randomizeWeaponAndThrowableCategories(playerData);
-            if (Defs.STRATAGEMS_RANDOMIZATION_PROCEDURE > -1) randomizeStratagems(playerData);
-            if (Defs.RANDOMIZE_BOOSTERS) randomizeBooster(playerData);
+            System.out.println("Giocatore: " + helldiverData.getName());
+            if (Defs.ARMOR_RANDOMIZATION_PROCEDURE > -1) randomizeArmor(helldiverData);
+            randomizeWeaponAndThrowableCategories(helldiverData);
+            if (Defs.STRATAGEMS_RANDOMIZATION_PROCEDURE > -1) randomizeStratagems(helldiverData);
+            if (Defs.RANDOMIZE_BOOSTERS) randomizeBooster(helldiverData);
             printDecorativeLine();
             System.out.print("\n\n\n");
         }
     }
 
     // Randomization Phases
-    private static void randomizeArmor(@NotNull final PlayerData playerData) {
+    private static void randomizeArmor(@NotNull final HelldiverData helldiverData) {
         switch (Defs.ARMOR_RANDOMIZATION_PROCEDURE) {
             case 0:
                 if (Randomizer.randomFromZeroTo(100) % 2 == 0) { // Category
-                    System.out.println("\t-Categoria Armatura: " + Randomizer.randomizeArmorCategory(playerData));
+                    System.out.println("\t-Categoria Armatura: " + Randomizer.randomizeArmorCategory(helldiverData));
                 } else { // Buff
-                    System.out.println("\t-Buff Armatura: " + Randomizer.randomizeArmorBuff(playerData));
+                    System.out.println("\t-Buff Armatura: " + Randomizer.randomizeArmorBuff(helldiverData));
                 }
                 break;
 
             case 1:
-                System.out.println("\t-Categoria Armatura: " + Randomizer.randomizeArmorCategory(playerData));
+                System.out.println("\t-Categoria Armatura: " + Randomizer.randomizeArmorCategory(helldiverData));
                 break;
 
             case 2:
-                System.out.println("\t-Buff Armatura: " + Randomizer.randomizeArmorBuff(playerData));
+                System.out.println("\t-Buff Armatura: " + Randomizer.randomizeArmorBuff(helldiverData));
                 break;
 
             default:
@@ -128,66 +136,66 @@ public final class HellRandomizer {
                 System.exit(0);
         }
     }
-    private static void randomizePrimaryWeapon(@NotNull final PlayerData playerData) {
+    private static void randomizePrimaryWeapon(@NotNull final HelldiverData helldiverData) {
         switch (Defs.PRIMARY_WEAPON_RANDOMIZATION_PROCEDURE) {
             case -1: break; // No Randomization
 
             case 0:
-                System.out.println("\t-Categoria Arma Primaria: " + Randomizer.randomizePrimaryWeaponType(playerData));
+                System.out.println("\t-Categoria Arma Primaria: " + Randomizer.randomizePrimaryWeaponType(helldiverData));
                 break;
 
             case 1:
-                System.out.println("\t-Arma Primaria: " + Randomizer.randomizePrimaryWeapon(playerData));
+                System.out.println("\t-Arma Primaria: " + Randomizer.randomizePrimaryWeapon(helldiverData));
                 break;
         }
     }
-    private static void randomizeSecondaryWeapon(@NotNull final PlayerData playerData) {
+    private static void randomizeSecondaryWeapon(@NotNull final HelldiverData helldiverData) {
         switch (Defs.SECONDARY_WEAPON_RANDOMIZATION_PROCEDURE) {
             case -1: break; // No Randomization
 
             case 0:
-                System.out.println("\t-Categoria Arma Secondaria: " + Randomizer.randomizeSecondaryWeaponType(playerData));
+                System.out.println("\t-Categoria Arma Secondaria: " + Randomizer.randomizeSecondaryWeaponType(helldiverData));
                 break;
 
             case 1:
-                System.out.println("\t-Arma Secondaria: " + Randomizer.randomizeSecondaryWeapon(playerData));
+                System.out.println("\t-Arma Secondaria: " + Randomizer.randomizeSecondaryWeapon(helldiverData));
                 break;
         }
     }
-    private static void randomizeThrowableWeapon(@NotNull final PlayerData playerData) {
+    private static void randomizeThrowableWeapon(@NotNull final HelldiverData helldiverData) {
         switch (Defs.THROWABLE_WEAPON_RANDOMIZATION_PROCEDURE) {
             case -1: break; // No Randomization
 
             case 0:
-                System.out.println("\t-Categoria Arma Lanciabile: " + Randomizer.randomizeThrowableWeaponType(playerData));
+                System.out.println("\t-Categoria Arma Lanciabile: " + Randomizer.randomizeThrowableWeaponType(helldiverData));
                 break;
 
             case 1:
-                System.out.println("\t-Arma Lanciabile: " + Randomizer.randomizeThrowableWeapon(playerData));
+                System.out.println("\t-Arma Lanciabile: " + Randomizer.randomizeThrowableWeapon(helldiverData));
                 break;
         }
     }
-    private static void randomizeWeaponAndThrowableCategories(@NotNull final PlayerData playerData) {
-        randomizePrimaryWeapon(playerData);
-        randomizeSecondaryWeapon(playerData);
-        randomizeThrowableWeapon(playerData);
+    private static void randomizeWeaponAndThrowableCategories(@NotNull final HelldiverData helldiverData) {
+        randomizePrimaryWeapon(helldiverData);
+        randomizeSecondaryWeapon(helldiverData);
+        randomizeThrowableWeapon(helldiverData);
     }
-    private static void randomizeStratagems(@NotNull final PlayerData playerData) {
+    private static void randomizeStratagems(@NotNull final HelldiverData helldiverData) {
         ArrayList<Stratagem> randomizedStratagems = new ArrayList<>();
-        int maxStratagems = Math.min(4, playerData.getStratagems().length);
+        int maxStratagems = Math.min(4, helldiverData.getStratagems().length);
 
         if (maxStratagems > 0) {
             switch (Defs.STRATAGEMS_RANDOMIZATION_PROCEDURE) {
                 case 0:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) randomizedStratagems.add(stratagem);
                     }
                     break;
 
                 case 1:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
@@ -198,7 +206,7 @@ public final class HellRandomizer {
 
                 case 2:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
@@ -211,7 +219,7 @@ public final class HellRandomizer {
 
                 case 3:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
@@ -224,7 +232,7 @@ public final class HellRandomizer {
 
                 case 4:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
@@ -237,7 +245,7 @@ public final class HellRandomizer {
 
                 case 5:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
@@ -250,7 +258,7 @@ public final class HellRandomizer {
 
                 case 6:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
@@ -264,7 +272,7 @@ public final class HellRandomizer {
 
                 case 7:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
@@ -278,7 +286,7 @@ public final class HellRandomizer {
 
                 case 8:
                     while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(playerData);
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
                         if (!randomizedStratagems.contains(stratagem)) {
                             if (randomizedStratagems.isEmpty()) {
                                 if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
@@ -300,11 +308,11 @@ public final class HellRandomizer {
             }
         }
     }
-    private static void randomizeBooster(@NotNull final PlayerData playerData) {
-        if (playerData.getBoosters().isEmpty()) return;
+    private static void randomizeBooster(@NotNull final HelldiverData helldiverData) {
+        if (helldiverData.getBoosters().isEmpty()) return;
         Booster booster;
         do {
-            booster = Randomizer.randomizeBooster(playerData);
+            booster = Randomizer.randomizeBooster(helldiverData);
         } while (RANDOMIZED_BOOSTERS.contains(booster));
         RANDOMIZED_BOOSTERS.add(booster);
         System.out.println("\t-Potenziamento: " + booster);
@@ -315,8 +323,8 @@ public final class HellRandomizer {
         System.out.println("***************************************************************************");
     }
     private static void removeSuperEarthEnabledBoosters() {
-        for (PlayerData playerData : Defs.PLAYERS_DATA) {
-            Arrays.asList(Defs.BOOSTERS_ENABLED_BY_SUPER_EARTH).forEach(playerData.getBoosters()::remove);
+        for (HelldiverData helldiverData : HelldiversDataManager.getHelldiversData()) {
+            Arrays.asList(Defs.BOOSTERS_ENABLED_BY_SUPER_EARTH).forEach(helldiverData.getBoosters()::remove);
         }
     }
     private static void flagAllSuperEarthEnabled() {

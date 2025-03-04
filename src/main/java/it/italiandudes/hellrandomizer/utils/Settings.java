@@ -1,6 +1,5 @@
-package it.italiandudes.hellrandomizer.javafx.utils;
+package it.italiandudes.hellrandomizer.utils;
 
-import it.italiandudes.hellrandomizer.utils.Defs;
 import it.italiandudes.idl.common.JSONManager;
 import it.italiandudes.idl.common.JarHandler;
 import it.italiandudes.idl.common.Logger;

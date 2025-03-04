@@ -74,8 +74,10 @@ public final class JFXDefs {
             public static final String IMAGE_FILE_EXPLORER = IMAGE_DIR + "file-explorer.png";
             public static final String IMAGE_PLAY = IMAGE_DIR + "play.png";
             public static final String IMAGE_STOP = IMAGE_DIR + "stop.png";
-            public static final String IMAGE_TICK = IMAGE_DIR + "tick.png";
-            public static final String IMAGE_CROSS = IMAGE_DIR + "cross.png";
+            public static final javafx.scene.image.Image IMAGE_TICK = new javafx.scene.image.Image(IMAGE_DIR + "tick.png");
+            public static final javafx.scene.image.Image IMAGE_CROSS = new javafx.scene.image.Image(IMAGE_DIR + "cross.png");
+            public static final javafx.scene.image.Image IMAGE_WHITELIST = new javafx.scene.image.Image(IMAGE_DIR + "whitelist.png");
+            public static final javafx.scene.image.Image IMAGE_BLACKLIST = new javafx.scene.image.Image(IMAGE_DIR + "blacklist.png");
         }
     }
 }

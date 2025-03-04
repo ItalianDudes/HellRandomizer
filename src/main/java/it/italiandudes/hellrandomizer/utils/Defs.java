@@ -1,7 +1,6 @@
 package it.italiandudes.hellrandomizer.utils;
 
 import it.italiandudes.hellrandomizer.HellRandomizer;
-import it.italiandudes.hellrandomizer.data.PlayerData;
 import it.italiandudes.hellrandomizer.data.enums.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,10 +8,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public final class Defs {
 
     // App File Name
@@ -68,6 +66,7 @@ public final class Defs {
         public static final class JSON {
             public static final String CLIENT_SETTINGS = "settings.json";
             public static final String DEFAULT_JSON_SETTINGS = PROJECT_RESOURCES_ROOT + "json/" + CLIENT_SETTINGS;
+            public static final String HELLDIVERS_DATA = "helldivers_data.json";
         }
     }
 
@@ -121,9 +120,10 @@ public final class Defs {
     *                 })
     * ));
     * */
+    /*
     @NotNull
-    public static final HashSet<PlayerData> PLAYERS_DATA = new HashSet<>(Arrays.asList(
-            new PlayerData(
+    public static final HashSet<HelldiverData> PLAYERS_DATA = new HashSet<>(Arrays.asList(
+            new HelldiverData(
                     "Alessio", true,
                     ArmorCategory.values(),
                     true,
@@ -169,7 +169,7 @@ public final class Defs {
                             Booster.EXPERIMENTAL_INFUSION
                     }
             ),
-            new PlayerData(
+            new HelldiverData(
                     "Jennifer", false,
                     ArmorCategory.values(),
                     false,
@@ -254,7 +254,7 @@ public final class Defs {
                             Booster.EXPERT_EXTRACTION_PILOT
                     }
             ),
-            new PlayerData(
+            new HelldiverData(
                     "Manta", true,
                     ArmorCategory.values(),
                     true,
@@ -289,7 +289,7 @@ public final class Defs {
                             Booster.EXPERIMENTAL_INFUSION
                     }
             ),
-            new PlayerData(
+            new HelldiverData(
                     "Tonno", false,
                     ArmorCategory.values(),
                     true,
@@ -346,7 +346,7 @@ public final class Defs {
                             Booster.DEAD_SPRINT
                     }
             ),
-            new PlayerData(
+            new HelldiverData(
                     "Andrea", true,
                     ArmorCategory.values(),
                     true,
@@ -409,7 +409,7 @@ public final class Defs {
                             Booster.ARMED_RESUPPLY_PODS
                     }
             ),
-            new PlayerData(
+            new HelldiverData(
                     "Edoardo", false,
                     ArmorCategory.values(),
                     false,
@@ -458,7 +458,7 @@ public final class Defs {
                             Booster.VITALITY_ENHANCEMENT
                     }
             )
-    ));
+    ));*/
 
     // Fazione
     /*
