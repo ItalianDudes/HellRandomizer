@@ -3,18 +3,22 @@ package it.italiandudes.hellrandomizer.utils;
 import it.italiandudes.hellrandomizer.data.HelldiverData;
 import it.italiandudes.hellrandomizer.data.enums.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public final class Randomizer {
 
+    // Attributes
+    private static final ArrayList<@NotNull Booster> RANDOMIZED_BOOSTERS = new ArrayList<>();
+
     // Public
+    public static void removeBoosterFromBoostersHistory(@NotNull final Booster booster) {
+        RANDOMIZED_BOOSTERS.remove(booster);
+    }
     @NotNull public static ArmorCategory randomizeArmorCategory(@NotNull final HelldiverData helldiverData) {
         return helldiverData.getArmorCategories()[randomFromZeroTo(helldiverData.getArmorCategories().length)];
     }
@@ -24,20 +28,147 @@ public final class Randomizer {
     @NotNull public static PrimaryWeapon randomizePrimaryWeapon(@NotNull final HelldiverData helldiverData) {
         return helldiverData.getPrimaryWeapons().toArray(new PrimaryWeapon[0])[randomFromZeroTo(helldiverData.getPrimaryWeapons().size())];
     }
-    @NotNull public static PrimaryWeaponType randomizePrimaryWeaponType(@NotNull final HelldiverData helldiverData) {
-        return helldiverData.getPrimaryWeaponTypes().toArray(new PrimaryWeaponType[0])[randomFromZeroTo(helldiverData.getPrimaryWeaponTypes().size())];
+    @NotNull public static PrimaryWeaponCategory randomizePrimaryWeaponCategory(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getPrimaryWeaponTypes().toArray(new PrimaryWeaponCategory[0])[randomFromZeroTo(helldiverData.getPrimaryWeaponTypes().size())];
     }
     @NotNull public static SecondaryWeapon randomizeSecondaryWeapon(@NotNull final HelldiverData helldiverData) {
         return helldiverData.getSecondaryWeapons().toArray(new SecondaryWeapon[0])[randomFromZeroTo(helldiverData.getSecondaryWeapons().size())];
     }
-    @NotNull public static SecondaryWeaponType randomizeSecondaryWeaponType(@NotNull final HelldiverData helldiverData) {
-        return helldiverData.getSecondaryWeaponTypes().toArray(new SecondaryWeaponType[0])[randomFromZeroTo(helldiverData.getSecondaryWeaponTypes().size())];
+    @NotNull public static SecondaryWeaponCategory randomizeSecondaryWeaponCategory(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getSecondaryWeaponTypes().toArray(new SecondaryWeaponCategory[0])[randomFromZeroTo(helldiverData.getSecondaryWeaponTypes().size())];
     }
     @NotNull public static ThrowableWeapon randomizeThrowableWeapon(@NotNull final HelldiverData helldiverData) {
         return helldiverData.getThrowableWeapons().toArray(new ThrowableWeapon[0])[randomFromZeroTo(helldiverData.getThrowableWeapons().size())];
     }
-    @NotNull public static ThrowableWeaponType randomizeThrowableWeaponType(@NotNull final HelldiverData helldiverData) {
-        return helldiverData.getThrowableWeaponTypes().toArray(new ThrowableWeaponType[0])[randomFromZeroTo(helldiverData.getThrowableWeaponTypes().size())];
+    @NotNull public static ThrowableWeaponCategory randomizeThrowableWeaponCategory(@NotNull final HelldiverData helldiverData) {
+        return helldiverData.getThrowableWeaponTypes().toArray(new ThrowableWeaponCategory[0])[randomFromZeroTo(helldiverData.getThrowableWeaponTypes().size())];
+    }
+    @NotNull public static ArrayList<@NotNull Stratagem> randomizeStratagems(@NotNull final HelldiverData helldiverData) {
+        ArrayList<Stratagem> randomizedStratagems = new ArrayList<>();
+        int maxStratagems = Math.min(4, helldiverData.getStratagems().size());
+
+        if (maxStratagems > 0) {
+            switch (Settings.getSettings().getInt(Defs.SettingsKeys.STRATAGEMS_RANDOMIZATION_PROCEDURE)) {
+                case 0: break; // No Randomization
+
+                case 1:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) randomizedStratagems.add(stratagem);
+                    }
+                    break;
+
+                case 2:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else randomizedStratagems.add(stratagem);
+                        }
+                    }
+                    break;
+
+                case 3:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else {
+                                if (!stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            }
+                        }
+                    }
+                    break;
+
+                case 4:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
+                            } else {
+                                randomizedStratagems.add(stratagem);
+                            }
+                        }
+                    }
+                    break;
+
+                case 5:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
+                            } else {
+                                if (!stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
+                            }
+                        }
+                    }
+                    break;
+
+                case 6:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else if (randomizedStratagems.size() == 1) {
+                                if (stratagem.hasBackpack() || randomizedStratagems.get(0).hasBackpack()) randomizedStratagems.add(stratagem);
+                            } else randomizedStratagems.add(stratagem);
+                        }
+                    }
+                    break;
+
+                case 7:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else if (randomizedStratagems.size() == 1) {
+                                if (randomizedStratagems.get(0).hasBackpack() && !stratagem.hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                                else if (!randomizedStratagems.get(0).hasBackpack() && stratagem.hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else if (!stratagem.isSupportWeapon() && !stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
+                        }
+                    }
+                    break;
+
+                case 8:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else if (randomizedStratagems.size() == 1) {
+                                if (randomizedStratagems.get(0).hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                                else if (stratagem.hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else if (!stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                        }
+                    }
+                    break;
+
+                case 9:
+                    while (randomizedStratagems.size() < maxStratagems) {
+                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
+                        if (!randomizedStratagems.contains(stratagem)) {
+                            if (randomizedStratagems.isEmpty()) {
+                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
+                            } else if (randomizedStratagems.size() == 1) {
+                                if (randomizedStratagems.get(0).hasBackpack() && !stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
+                                else if (!randomizedStratagems.get(0).hasBackpack() && stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
+                            } else if (!stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
+                        }
+                    }
+                    break;
+
+                default:
+                    System.err.println("ERRORE: Il valore di STRATAGEMS_RANDOMIZATION_PROCEDURE non è nei limiti massimi [0, 9].");
+                    System.exit(-1);
+            }
+        }
+        return randomizedStratagems;
     }
     @NotNull public static Stratagem randomizeStratagem(@NotNull final HelldiverData helldiverData) {
         Stratagem stratagem;
@@ -46,11 +177,13 @@ public final class Randomizer {
         } while (stratagem.isEnabledBySuperEarth());
         return stratagem;
     }
-    @NotNull public static Booster randomizeBooster(@NotNull final HelldiverData helldiverData) {
+    @Nullable public static Booster randomizeBooster(@NotNull final HelldiverData helldiverData) {
+        if (helldiverData.getBoosters().isEmpty()) return null;
         Booster booster;
         do {
             booster = helldiverData.getBoosters().toArray(new Booster[0])[randomFromZeroTo(helldiverData.getBoosters().size())];
-        } while (booster.isEnabledBySuperEarth());
+        } while (booster.isEnabledBySuperEarth() || RANDOMIZED_BOOSTERS.contains(booster));
+        RANDOMIZED_BOOSTERS.add(booster);
         return booster;
     }
     @NotNull public static Enemy randomizeEnemy() {

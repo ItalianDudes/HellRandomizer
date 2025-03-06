@@ -2,7 +2,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum ThrowableWeaponType {
+public enum ThrowableWeaponCategory {
     STANDARD("Standard"),
     SPECIAL("Speciale");
 
@@ -10,7 +10,7 @@ public enum ThrowableWeaponType {
     @NotNull private final String name;
 
     // Constructors
-    ThrowableWeaponType(@NotNull final String name) {
+    ThrowableWeaponCategory(@NotNull final String name) {
         this.name = name;
     }
 

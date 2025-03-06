@@ -507,15 +507,15 @@ public final class ControllerSceneTabPlayersData {
 
             helldiverData.getPrimaryWeapons().removeIf(any -> true);
             helldiverData.getPrimaryWeapons().addAll(helldiverPrimaryWeapons);
-            helldiverData.updatePrimaryWeaponTypes();
+            helldiverData.updatePrimaryWeaponCategories();
 
             helldiverData.getSecondaryWeapons().removeIf(any -> true);
             helldiverData.getSecondaryWeapons().addAll(helldiverSecondaryWeapons);
-            helldiverData.updateSecondaryWeaponTypes();
+            helldiverData.updateSecondaryWeaponCategories();
 
             helldiverData.getThrowableWeapons().removeIf(any -> true);
             helldiverData.getThrowableWeapons().addAll(helldiverThrowableWeapons);
-            helldiverData.updateThrowableWeaponTypes();
+            helldiverData.updateThrowableWeaponCategories();
 
             helldiverData.getStratagems().removeIf(any -> true);
             helldiverData.getStratagems().addAll(helldiverStratagems);
@@ -527,7 +527,10 @@ public final class ControllerSceneTabPlayersData {
         JFXDefs.startServiceTask(() -> {
             try {
                 HelldiversDataManager.writeHelldiversDataFile();
-                Platform.runLater(() -> new InformationAlert("SUCCESSO", "Salvataggio Modifiche", "Modifiche salvate con successo!"));
+                Platform.runLater(() -> {
+                    mainMenuController.getTabRandomizerController().loadHelldiverScenes();
+                    new InformationAlert("SUCCESSO", "Salvataggio Modifiche", "Modifiche salvate con successo!");
+                });
             } catch (IOException e) {
                 Platform.runLater(() -> new ErrorAlert("ERRORE", "Errore di I/O", "Si e' verificato un errore durante il salvataggio dei dati, chiusura applicazione..."));
                 Logger.log(e);

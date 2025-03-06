@@ -3,24 +3,24 @@ package it.italiandudes.hellrandomizer.data.enums;
 import org.jetbrains.annotations.NotNull;
 
 public enum ThrowableWeapon {
-    G6_FRAG("G-6 a Frammentazione", ThrowableWeaponType.STANDARD),
-    G12_HIGH_EXPLOSIVE("G-12 Altamente Esplosiva", ThrowableWeaponType.STANDARD),
-    G10_INCENDIARY("G-10 Incendiaria", ThrowableWeaponType.STANDARD),
-    G16_IMPACT("G-16 Impatto", ThrowableWeaponType.SPECIAL),
-    G13_INCENDIARY_IMPACT("G-13 Granate Incendiarie", ThrowableWeaponType.SPECIAL),
-    G23_STUN("G-23 Stordente", ThrowableWeaponType.SPECIAL),
-    G4_GAS("G-4 Gas", ThrowableWeaponType.SPECIAL),
-    G50_SEEKER("G-50 Cercatore", ThrowableWeaponType.SPECIAL),
-    G3_SMOKE("G-3 Fumogena", ThrowableWeaponType.SPECIAL),
-    G123_THERMITE("G-123 Termite", ThrowableWeaponType.SPECIAL),
-    K2_THROWING_KNIFE("K-2 Coltello da Lancio", ThrowableWeaponType.SPECIAL);
+    G6_FRAG("G-6 a Frammentazione", ThrowableWeaponCategory.STANDARD),
+    G12_HIGH_EXPLOSIVE("G-12 Altamente Esplosiva", ThrowableWeaponCategory.STANDARD),
+    G10_INCENDIARY("G-10 Incendiaria", ThrowableWeaponCategory.STANDARD),
+    G16_IMPACT("G-16 Impatto", ThrowableWeaponCategory.SPECIAL),
+    G13_INCENDIARY_IMPACT("G-13 Granate Incendiarie", ThrowableWeaponCategory.SPECIAL),
+    G23_STUN("G-23 Stordente", ThrowableWeaponCategory.SPECIAL),
+    G4_GAS("G-4 Gas", ThrowableWeaponCategory.SPECIAL),
+    G50_SEEKER("G-50 Cercatore", ThrowableWeaponCategory.SPECIAL),
+    G3_SMOKE("G-3 Fumogena", ThrowableWeaponCategory.SPECIAL),
+    G123_THERMITE("G-123 Termite", ThrowableWeaponCategory.SPECIAL),
+    K2_THROWING_KNIFE("K-2 Coltello da Lancio", ThrowableWeaponCategory.SPECIAL);
 
     // Attributes
     @NotNull private final String name;
-    @NotNull private final ThrowableWeaponType type;
+    @NotNull private final ThrowableWeaponCategory type;
 
     // Constructors
-    ThrowableWeapon(@NotNull final String name, @NotNull final ThrowableWeaponType type) {
+    ThrowableWeapon(@NotNull final String name, @NotNull final ThrowableWeaponCategory type) {
         this.name = name;
         this.type = type;
     }
@@ -29,7 +29,7 @@ public enum ThrowableWeapon {
     public @NotNull String getName() {
         return name;
     }
-    public @NotNull ThrowableWeaponType getType() {
+    public @NotNull ThrowableWeaponCategory getType() {
         return type;
     }
     @Override @NotNull

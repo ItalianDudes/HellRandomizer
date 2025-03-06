@@ -2,7 +2,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum SecondaryWeaponType {
+public enum SecondaryWeaponCategory {
     PISTOL("Pistola"),
     MELEE("Corpo a Corpo"),
     SPECIAL("Speciale");
@@ -11,7 +11,7 @@ public enum SecondaryWeaponType {
     @NotNull private final String name;
 
     // Constructors
-    SecondaryWeaponType(@NotNull final String name) {
+    SecondaryWeaponCategory(@NotNull final String name) {
         this.name = name;
     }
 

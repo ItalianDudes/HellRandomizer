@@ -50,6 +50,7 @@ public final class JFXDefs {
             public static final class Tabs {
                 private static final String TABS_DIR = FXML_DIR + "tabs/";
                 public static final String FXML_TAB_RANDOMIZER = TABS_DIR + "SceneTabRandomizer.fxml";
+                public static final String FXML_TAB_HELLDIVER_PANE = TABS_DIR + "SceneHelldiverPane.fxml";
                 public static final String FXML_TAB_PLAYERS_DATA = TABS_DIR + "SceneTabPlayersData.fxml";
                 public static final String FXML_TAB_SETTINGS = TABS_DIR + "SceneTabSettings.fxml";
             }

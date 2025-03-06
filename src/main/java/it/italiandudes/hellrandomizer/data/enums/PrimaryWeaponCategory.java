@@ -2,7 +2,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum PrimaryWeaponType {
+public enum PrimaryWeaponCategory {
     ASSAULT_RIFLE("Fucile d'Assalto"),
     MARKSMAN_RIFLE("Fucile di Precisione"),
     SNIPER_RIFLE("Fucile da Cecchino"),
@@ -16,7 +16,7 @@ public enum PrimaryWeaponType {
     @NotNull private final String name;
 
     // Constructors
-    PrimaryWeaponType(@NotNull final String name) {
+    PrimaryWeaponCategory(@NotNull final String name) {
         this.name = name;
     }
 

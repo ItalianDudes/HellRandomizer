@@ -20,11 +20,11 @@ public final class HelldiverData {
     private boolean enrolledForRandomizer;
     private final ArmorCategory @NotNull[] armorCategories;
     @NotNull private final Set<@NotNull ArmorBuff> armorBuffs;
-    @NotNull private final Set<@NotNull PrimaryWeaponType> primaryWeaponTypes;
+    @NotNull private final Set<@NotNull PrimaryWeaponCategory> primaryWeaponCategories;
     @NotNull private final Set<@NotNull PrimaryWeapon> primaryWeapons;
-    @NotNull private final Set<@NotNull SecondaryWeaponType> secondaryWeaponTypes;
+    @NotNull private final Set<@NotNull SecondaryWeaponCategory> secondaryWeaponCategories;
     @NotNull private final Set<@NotNull SecondaryWeapon> secondaryWeapons;
-    @NotNull private final Set<@NotNull ThrowableWeaponType> throwableWeaponTypes;
+    @NotNull private final Set<@NotNull ThrowableWeaponCategory> throwableWeaponCategories;
     @NotNull private final Set<@NotNull ThrowableWeapon> throwableWeapons;
     @NotNull private final Set<@NotNull Stratagem> stratagems;
     @NotNull private final Set<@NotNull Booster> boosters;
@@ -49,17 +49,17 @@ public final class HelldiverData {
         if (primaryWeaponsAsBlacklist) {
             this.primaryWeapons = primaryWeapons != null ? Arrays.stream(PrimaryWeapon.values()).filter(weapon -> !Arrays.asList(primaryWeapons).contains(weapon)).collect(Collectors.toSet()) : Arrays.stream(PrimaryWeapon.values()).collect(Collectors.toSet());
         } else this.primaryWeapons = primaryWeapons != null ? Arrays.stream(primaryWeapons).collect(Collectors.toSet()) : new HashSet<>();
-        this.primaryWeaponTypes = this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet());
+        this.primaryWeaponCategories = this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet());
 
         if (secondaryWeaponsAsBlacklist) {
             this.secondaryWeapons = secondaryWeapons != null ? Arrays.stream(SecondaryWeapon.values()).filter(weapon -> !Arrays.asList(secondaryWeapons).contains(weapon)).collect(Collectors.toSet()) : Arrays.stream(SecondaryWeapon.values()).collect(Collectors.toSet());
         } else this.secondaryWeapons = secondaryWeapons != null ? Arrays.stream(secondaryWeapons).collect(Collectors.toSet()) : new HashSet<>();
-        this.secondaryWeaponTypes = this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet());
+        this.secondaryWeaponCategories = this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet());
 
         if (throwableWeaponsBlacklist) {
             this.throwableWeapons = throwableWeapons != null ? Arrays.stream(ThrowableWeapon.values()).filter(weapon -> !Arrays.asList(throwableWeapons).contains(weapon)).collect(Collectors.toSet()) : Arrays.stream(ThrowableWeapon.values()).collect(Collectors.toSet());
         } else this.throwableWeapons = throwableWeapons != null ? Arrays.stream(throwableWeapons).collect(Collectors.toSet()) : new HashSet<>();
-        this.throwableWeaponTypes = this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet());
+        this.throwableWeaponCategories = this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet());
 
         if (stratagemsAsBlacklist) {
             this.stratagems = stratagems != null ? Arrays.stream(Stratagem.values()).filter(element -> !Arrays.asList(stratagems).contains(element)).collect(Collectors.toSet()) : Arrays.stream(Stratagem.values()).collect(Collectors.toSet());
@@ -87,19 +87,19 @@ public final class HelldiverData {
         for (int i = 0; i < primaryWeapons.length(); i++) {
             this.primaryWeapons.add(PrimaryWeapon.values()[primaryWeapons.getInt(i)]);
         }
-        this.primaryWeaponTypes = this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet());
+        this.primaryWeaponCategories = this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet());
         JSONArray secondaryWeapons = json.getJSONArray("secondaryWeapons");
         this.secondaryWeapons = new HashSet<>();
         for (int i = 0; i < secondaryWeapons.length(); i++) {
             this.secondaryWeapons.add(SecondaryWeapon.values()[secondaryWeapons.getInt(i)]);
         }
-        this.secondaryWeaponTypes = this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet());
+        this.secondaryWeaponCategories = this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet());
         JSONArray throwableWeapons = json.getJSONArray("throwableWeapons");
         this.throwableWeapons = new HashSet<>();
         for (int i = 0; i < throwableWeapons.length(); i++) {
             this.throwableWeapons.add(ThrowableWeapon.values()[throwableWeapons.getInt(i)]);
         }
-        this.throwableWeaponTypes = this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet());
+        this.throwableWeaponCategories = this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet());
         JSONArray stratagems = json.getJSONArray("stratagems");
         this.stratagems = new HashSet<>();
         for (int i = 0; i < stratagems.length(); i++) {
@@ -113,17 +113,17 @@ public final class HelldiverData {
     }
 
     // Methods
-    public void updatePrimaryWeaponTypes() {
-        this.primaryWeaponTypes.removeIf(primaryWeaponType -> true);
-        this.primaryWeaponTypes.addAll(this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet()));
+    public void updatePrimaryWeaponCategories() {
+        this.primaryWeaponCategories.removeIf(primaryWeaponCategory -> true);
+        this.primaryWeaponCategories.addAll(this.primaryWeapons.stream().map(PrimaryWeapon::getType).collect(Collectors.toSet()));
     }
-    public void updateSecondaryWeaponTypes() {
-        this.secondaryWeaponTypes.removeIf(secondaryWeaponType -> true);
-        this.secondaryWeaponTypes.addAll(this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet()));
+    public void updateSecondaryWeaponCategories() {
+        this.secondaryWeaponCategories.removeIf(secondaryWeaponCategory -> true);
+        this.secondaryWeaponCategories.addAll(this.secondaryWeapons.stream().map(SecondaryWeapon::getType).collect(Collectors.toSet()));
     }
-    public void updateThrowableWeaponTypes() {
-        this.throwableWeaponTypes.removeIf(throwableWeaponType -> true);
-        this.throwableWeaponTypes.addAll(this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet()));
+    public void updateThrowableWeaponCategories() {
+        this.throwableWeaponCategories.removeIf(throwableWeaponCategory -> true);
+        this.throwableWeaponCategories.addAll(this.throwableWeapons.stream().map(ThrowableWeapon::getType).collect(Collectors.toSet()));
     }
     public @NotNull String getName() {
         return name;
@@ -143,20 +143,20 @@ public final class HelldiverData {
     public @NotNull Set<@NotNull ArmorBuff> getArmorBuffs() {
         return armorBuffs;
     }
-    public @NotNull Set<@NotNull PrimaryWeaponType> getPrimaryWeaponTypes() {
-        return primaryWeaponTypes;
+    public @NotNull Set<@NotNull PrimaryWeaponCategory> getPrimaryWeaponTypes() {
+        return primaryWeaponCategories;
     }
     public @NotNull Set<@NotNull PrimaryWeapon> getPrimaryWeapons() {
         return primaryWeapons;
     }
-    public @NotNull Set<@NotNull SecondaryWeaponType> getSecondaryWeaponTypes() {
-        return secondaryWeaponTypes;
+    public @NotNull Set<@NotNull SecondaryWeaponCategory> getSecondaryWeaponTypes() {
+        return secondaryWeaponCategories;
     }
     public @NotNull Set<@NotNull SecondaryWeapon> getSecondaryWeapons() {
         return secondaryWeapons;
     }
-    public @NotNull Set<@NotNull ThrowableWeaponType> getThrowableWeaponTypes() {
-        return throwableWeaponTypes;
+    public @NotNull Set<@NotNull ThrowableWeaponCategory> getThrowableWeaponTypes() {
+        return throwableWeaponCategories;
     }
     public @NotNull Set<@NotNull ThrowableWeapon> getThrowableWeapons() {
         return throwableWeapons;

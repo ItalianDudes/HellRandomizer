@@ -21,9 +21,6 @@ import java.util.function.Predicate;
 
 public final class HellRandomizer {
 
-    // Attributes
-    private static final HashSet<@NotNull Booster> RANDOMIZED_BOOSTERS = new HashSet<>();
-
     // Main Method
     public static void main(String[] args) {
         try {
@@ -149,7 +146,7 @@ public final class HellRandomizer {
             case 0: break; // No Randomization
 
             case 1:
-                System.out.println("\t-Categoria Arma Primaria: " + Randomizer.randomizePrimaryWeaponType(helldiverData));
+                System.out.println("\t-Categoria Arma Primaria: " + Randomizer.randomizePrimaryWeaponCategory(helldiverData));
                 break;
 
             case 2:
@@ -162,7 +159,7 @@ public final class HellRandomizer {
             case 0: break; // No Randomization
 
             case 1:
-                System.out.println("\t-Categoria Arma Secondaria: " + Randomizer.randomizeSecondaryWeaponType(helldiverData));
+                System.out.println("\t-Categoria Arma Secondaria: " + Randomizer.randomizeSecondaryWeaponCategory(helldiverData));
                 break;
 
             case 2:
@@ -175,7 +172,7 @@ public final class HellRandomizer {
             case 0: break; // No Randomization
 
             case 1:
-                System.out.println("\t-Categoria Arma Lanciabile: " + Randomizer.randomizeThrowableWeaponType(helldiverData));
+                System.out.println("\t-Categoria Arma Lanciabile: " + Randomizer.randomizeThrowableWeaponCategory(helldiverData));
                 break;
 
             case 2:
@@ -189,143 +186,15 @@ public final class HellRandomizer {
         randomizeThrowableWeapon(helldiverData);
     }
     private static void randomizeStratagems(@NotNull final HelldiverData helldiverData) {
-        ArrayList<Stratagem> randomizedStratagems = new ArrayList<>();
-        int maxStratagems = Math.min(4, helldiverData.getStratagems().size());
-
-        if (maxStratagems > 0) {
-            switch (Settings.getSettings().getInt(Defs.SettingsKeys.STRATAGEMS_RANDOMIZATION_PROCEDURE)) {
-                case 0: break; // No Randomization
-
-                case 1:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) randomizedStratagems.add(stratagem);
-                    }
-                    break;
-
-                case 2:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else randomizedStratagems.add(stratagem);
-                        }
-                    }
-                    break;
-
-                case 3:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else {
-                                if (!stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            }
-                        }
-                    }
-                    break;
-
-                case 4:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
-                            } else {
-                                randomizedStratagems.add(stratagem);
-                            }
-                        }
-                    }
-                    break;
-
-                case 5:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
-                            } else {
-                                if (!stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
-                            }
-                        }
-                    }
-                    break;
-
-                case 6:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else if (randomizedStratagems.size() == 1) {
-                                if (stratagem.hasBackpack() || randomizedStratagems.get(0).hasBackpack()) randomizedStratagems.add(stratagem);
-                            } else randomizedStratagems.add(stratagem);
-                        }
-                    }
-                    break;
-
-                case 7:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else if (randomizedStratagems.size() == 1) {
-                                if (randomizedStratagems.get(0).hasBackpack() && !stratagem.hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                                else if (!randomizedStratagems.get(0).hasBackpack() && stratagem.hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else if (!stratagem.isSupportWeapon() && !stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
-                        }
-                    }
-                    break;
-
-                case 8:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else if (randomizedStratagems.size() == 1) {
-                                if (randomizedStratagems.get(0).hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                                else if (stratagem.hasBackpack() && !stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else if (!stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                        }
-                    }
-                    break;
-
-                case 9:
-                    while (randomizedStratagems.size() < maxStratagems) {
-                        Stratagem stratagem = Randomizer.randomizeStratagem(helldiverData);
-                        if (!randomizedStratagems.contains(stratagem)) {
-                            if (randomizedStratagems.isEmpty()) {
-                                if (stratagem.isSupportWeapon()) randomizedStratagems.add(stratagem);
-                            } else if (randomizedStratagems.size() == 1) {
-                                if (randomizedStratagems.get(0).hasBackpack() && !stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
-                                else if (!randomizedStratagems.get(0).hasBackpack() && stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
-                            } else if (!stratagem.hasBackpack()) randomizedStratagems.add(stratagem);
-                        }
-                    }
-                    break;
-
-                default:
-                    System.err.println("ERRORE: Il valore di STRATAGEMS_RANDOMIZATION_PROCEDURE non è nei limiti massimi [0, 9].");
-                    System.exit(-1);
-            }
-            System.out.println("\t-Stratagemmi:");
-            for (Stratagem stratagem : randomizedStratagems) {
-                System.out.println("\t\t- " + stratagem);
-            }
+        ArrayList<Stratagem> randomizedStratagems = Randomizer.randomizeStratagems(helldiverData);
+        System.out.println("\t-Stratagemmi:");
+        for (Stratagem stratagem : randomizedStratagems) {
+            System.out.println("\t\t- " + stratagem);
         }
     }
     private static void randomizeBooster(@NotNull final HelldiverData helldiverData) {
-        if (helldiverData.getBoosters().isEmpty()) return;
-        Booster booster;
-        do {
-            booster = Randomizer.randomizeBooster(helldiverData);
-        } while (RANDOMIZED_BOOSTERS.contains(booster));
-        RANDOMIZED_BOOSTERS.add(booster);
-        System.out.println("\t-Potenziamento: " + booster);
+        Booster booster = Randomizer.randomizeBooster(helldiverData);
+        System.out.println("\t-Potenziamento: " + (booster != null ? booster : "Nessuno"));
     }
 
     // Utility Methods

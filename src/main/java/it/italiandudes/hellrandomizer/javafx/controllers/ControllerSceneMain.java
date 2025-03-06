@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public final class ControllerSceneMain {
 
     // Graphic Elements
