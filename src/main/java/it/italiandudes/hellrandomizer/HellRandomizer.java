@@ -53,6 +53,9 @@ public final class HellRandomizer {
             System.exit(0);
         }
 
+        // Add a flag to all Super Earth Enabled Stratagems and Boosters
+        flagAllSuperEarthEnabled();
+
         // Start the client
         if (Arrays.stream(args).noneMatch(Predicate.isEqual(Defs.START_ARG_NOGUI))) {
             try {
@@ -66,9 +69,6 @@ public final class HellRandomizer {
             }
             return;
         }
-
-        // Add a flag to all Super Earth Enabled Stratagems and Boosters
-        flagAllSuperEarthEnabled();
 
         // Remove Super Earth Enabled Boosters From Players Data
         removeSuperEarthEnabledBoosters();
