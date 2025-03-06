@@ -342,10 +342,11 @@ public final class ControllerSceneTabPlayersData {
 
             MenuItem delete = new MenuItem("Elimina Helldiver");
             delete.setOnAction(event1 -> {
-                HelldiversDataManager.getHelldiversData().remove(data);
                 JFXDefs.startServiceTask(() -> {
                     try {
+                        HelldiversDataManager.getHelldiversData().remove(data);
                         HelldiversDataManager.writeHelldiversDataFile();
+                        Platform.runLater(() -> mainMenuController.getTabRandomizerController().loadHelldiverScenes());
                     } catch (IOException e) {
                         Logger.log(e);
                     }
