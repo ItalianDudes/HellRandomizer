@@ -198,7 +198,6 @@ public final class ControllerSceneHelldiverPane {
     }
     @FXML
     public void randomizeAll() {
-        System.out.println(helldiverData.getName());
         randomizeArmor();
         randomizePrimary();
         randomizeSecondary();

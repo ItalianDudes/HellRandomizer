@@ -8,6 +8,7 @@ import it.italiandudes.hellrandomizer.javafx.scene.tabs.SceneHelldiverPane;
 import it.italiandudes.hellrandomizer.utils.HelldiversDataManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,8 +42,10 @@ public final class ControllerSceneTabRandomizer {
 
     // Graphic Elements
     @FXML private VBox vBoxHelldiversContainer;
-    @FXML private ToggleButton toggleButtonRandomizeHelldivers;
-    @FXML private ImageView imageViewToggle;
+    @FXML private ToggleButton toggleButtonRandomizeAll;
+    @FXML private ImageView imageViewToggleRandomizeAll;
+    @FXML private Label labelEnemy;
+    @FXML private Label labelDifficulty;
 
     // Attributes
     @NotNull private final ArrayList<@NotNull SceneController> helldiversSceneControllers = new ArrayList<>();
@@ -51,7 +54,7 @@ public final class ControllerSceneTabRandomizer {
     // Initialize
     @FXML
     private void initialize() {
-        toggleButtonRandomizeHelldivers.selectedProperty().addListener((observable, oldValue, newValue) -> imageViewToggle.setImage(newValue?STOP:PLAY));
+        toggleButtonRandomizeAll.selectedProperty().addListener((observable, oldValue, newValue) -> imageViewToggleRandomizeAll.setImage(newValue?STOP:PLAY));
         JFXDefs.startServiceTask(() -> {
             //noinspection StatementWithEmptyBody
             while (!configurationComplete);
@@ -81,7 +84,9 @@ public final class ControllerSceneTabRandomizer {
                 .sorted(Comparator.comparing(HelldiverData::getName))
                 .collect(Collectors.toList());
     }
-    private void randomizeHelldivers() {
+    private void randomizeAll() {
+        randomizeEnemy();
+        randomizeDifficulty();
         for (SceneController sceneHelldiverPane : boostersSortedHelldiversSceneControllers) {
             ((ControllerSceneHelldiverPane) sceneHelldiverPane.getController()).randomizeAll();
         }
@@ -89,9 +94,17 @@ public final class ControllerSceneTabRandomizer {
 
     // EDT
     @FXML
-    private void toggleRandomizeHelldivers() {
-        if (!toggleButtonRandomizeHelldivers.isSelected()) return;
-        randomizeHelldivers();
-        if (toggleButtonRandomizeHelldivers.isSelected()) Platform.runLater(this::toggleRandomizeHelldivers);
+    private void toggleRandomizeAll() {
+        if (!toggleButtonRandomizeAll.isSelected()) return;
+        randomizeAll(); // TODO: decidere se mettere o no la sezione con la randomizzazione della difficoltà (o semplicemente mettere "A Scelta" come valore)
+        if (toggleButtonRandomizeAll.isSelected()) Platform.runLater(this::toggleRandomizeAll);
+    }
+    @FXML
+    private void randomizeEnemy() {
+        // TODO
+    }
+    @FXML
+    private void randomizeDifficulty() {
+        // TODO
     }
 }
