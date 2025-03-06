@@ -286,14 +286,22 @@ public final class ControllerSceneTabSettings {
         Settings.getSettings().put(Defs.SettingsKeys.THROWABLE_WEAPON_RANDOMIZATION_PROCEDURE, comboBoxThrowableWeaponRandomizationProcedure.getSelectionModel().getSelectedItem().ordinal());
         Settings.getSettings().put(Defs.SettingsKeys.STRATAGEMS_RANDOMIZATION_PROCEDURE, comboBoxStratagemsRandomizationProcedure.getSelectionModel().getSelectedItem().ordinal());
         JSONArray stratagemsEnabledBySuperEarth = new JSONArray();
+        for (Stratagem stratagem : Stratagem.values()) {
+            stratagem.setEnabledBySuperEarth(false);
+        }
         for (Stratagem stratagem : this.stratagemsEnabledBySuperEarth) {
             stratagemsEnabledBySuperEarth.put(stratagem.ordinal());
+            stratagem.setEnabledBySuperEarth(true);
         }
         Settings.getSettings().put(Defs.SettingsKeys.STRATAGEMS_ENABLED_BY_SUPER_EARTH, stratagemsEnabledBySuperEarth);
         Settings.getSettings().put(Defs.SettingsKeys.RANDOMIZE_BOOSTERS, toggleButtonRandomizeBoosters.isSelected());
         JSONArray boostersEnabledBySuperEarth = new JSONArray();
+        for (Booster booster : Booster.values()) {
+            booster.setEnabledBySuperEarth(false);
+        }
         for (Booster booster : this.boostersEnabledBySuperEarth) {
             boostersEnabledBySuperEarth.put(booster.ordinal());
+            booster.setEnabledBySuperEarth(true);
         }
         Settings.getSettings().put(Defs.SettingsKeys.BOOSTERS_ENABLED_BY_SUPER_EARTH, boostersEnabledBySuperEarth);
         JFXDefs.startServiceTask(() -> {

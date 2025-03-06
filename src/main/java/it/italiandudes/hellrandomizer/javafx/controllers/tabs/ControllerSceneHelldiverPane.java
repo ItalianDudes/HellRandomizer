@@ -31,6 +31,9 @@ public final class ControllerSceneHelldiverPane {
     public void setHelldiverData(@NotNull final HelldiverData helldiverData) {
         this.helldiverData = helldiverData;
     }
+    public @NotNull HelldiverData getHelldiverData() {
+        return helldiverData;
+    }
     public void configurationComplete() {
         configurationComplete = true;
     }
@@ -195,6 +198,7 @@ public final class ControllerSceneHelldiverPane {
     }
     @FXML
     public void randomizeAll() {
+        System.out.println(helldiverData.getName());
         randomizeArmor();
         randomizePrimary();
         randomizeSecondary();

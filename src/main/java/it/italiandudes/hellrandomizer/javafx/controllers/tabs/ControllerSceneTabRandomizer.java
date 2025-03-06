@@ -44,8 +44,9 @@ public final class ControllerSceneTabRandomizer {
     @FXML private ToggleButton toggleButtonRandomizeHelldivers;
     @FXML private ImageView imageViewToggle;
 
-    // Helldiver Scenes
+    // Attributes
     @NotNull private final ArrayList<@NotNull SceneController> helldiversSceneControllers = new ArrayList<>();
+    private List<@NotNull SceneController> boostersSortedHelldiversSceneControllers = null;
 
     // Initialize
     @FXML
@@ -67,6 +68,11 @@ public final class ControllerSceneTabRandomizer {
             helldiversSceneControllers.add(newHelldiver);
             vBoxHelldiversContainer.getChildren().add(newHelldiver.getParent());
         }
+        boostersSortedHelldiversSceneControllers = helldiversSceneControllers.stream().sorted((o1, o2) -> {
+            ControllerSceneHelldiverPane p1 = (ControllerSceneHelldiverPane) o1.getController();
+            ControllerSceneHelldiverPane p2 = (ControllerSceneHelldiverPane) o2.getController();
+            return Integer.compare(p2.getHelldiverData().getBoosters().size(), p1.getHelldiverData().getBoosters().size()) * -1;
+        }).collect(Collectors.toList());
     }
     @NotNull
     public List<@NotNull HelldiverData> getHelldiversEnrolledForRandomizer() {
@@ -76,7 +82,7 @@ public final class ControllerSceneTabRandomizer {
                 .collect(Collectors.toList());
     }
     private void randomizeHelldivers() {
-        for (SceneController sceneHelldiverPane : helldiversSceneControllers) {
+        for (SceneController sceneHelldiverPane : boostersSortedHelldiversSceneControllers) {
             ((ControllerSceneHelldiverPane) sceneHelldiverPane.getController()).randomizeAll();
         }
     }

@@ -8,6 +8,7 @@ import it.italiandudes.hellrandomizer.javafx.alerts.ErrorAlert;
 import it.italiandudes.hellrandomizer.javafx.alerts.InformationAlert;
 import it.italiandudes.hellrandomizer.javafx.controllers.ControllerSceneMain;
 import it.italiandudes.hellrandomizer.utils.HelldiversDataManager;
+import it.italiandudes.hellrandomizer.utils.Randomizer;
 import it.italiandudes.idl.common.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -528,6 +529,7 @@ public final class ControllerSceneTabPlayersData {
         JFXDefs.startServiceTask(() -> {
             try {
                 HelldiversDataManager.writeHelldiversDataFile();
+                Randomizer.clearRandomizedBoostersHistory();
                 Platform.runLater(() -> {
                     mainMenuController.getTabRandomizerController().loadHelldiverScenes();
                     new InformationAlert("SUCCESSO", "Salvataggio Modifiche", "Modifiche salvate con successo!");
