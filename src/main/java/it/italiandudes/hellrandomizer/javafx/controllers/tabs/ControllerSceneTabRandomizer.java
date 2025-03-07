@@ -5,7 +5,10 @@ import it.italiandudes.hellrandomizer.javafx.JFXDefs;
 import it.italiandudes.hellrandomizer.javafx.components.SceneController;
 import it.italiandudes.hellrandomizer.javafx.controllers.ControllerSceneMain;
 import it.italiandudes.hellrandomizer.javafx.scene.tabs.SceneHelldiverPane;
+import it.italiandudes.hellrandomizer.utils.Defs;
 import it.italiandudes.hellrandomizer.utils.HelldiversDataManager;
+import it.italiandudes.hellrandomizer.utils.Randomizer;
+import it.italiandudes.hellrandomizer.utils.Settings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -96,15 +99,19 @@ public final class ControllerSceneTabRandomizer {
     @FXML
     private void toggleRandomizeAll() {
         if (!toggleButtonRandomizeAll.isSelected()) return;
-        randomizeAll(); // TODO: decidere se mettere o no la sezione con la randomizzazione della difficoltà (o semplicemente mettere "A Scelta" come valore)
+        randomizeAll();
         if (toggleButtonRandomizeAll.isSelected()) Platform.runLater(this::toggleRandomizeAll);
     }
     @FXML
     private void randomizeEnemy() {
-        // TODO
+        if (Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_ENEMY)) {
+            labelEnemy.setText(Randomizer.randomizeEnemy().toString());
+        } else labelEnemy.setText("A Scelta");
     }
     @FXML
     private void randomizeDifficulty() {
-        // TODO
+        if (Settings.getSettings().getBoolean(Defs.SettingsKeys.RANDOMIZE_DIFFICULTY)) {
+            labelDifficulty.setText(Randomizer.randomizeDifficulty().toString());
+        } else labelDifficulty.setText("A Scelta");
     }
 }
