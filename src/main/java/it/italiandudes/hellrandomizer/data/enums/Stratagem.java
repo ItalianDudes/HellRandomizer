@@ -66,7 +66,8 @@ public enum Stratagem {
     CODE_SH51_DIRECTIONAL_SHIELD("SH-51 Scudo Direzionale", false, true),
     CODE_AFLAM40_FLAME_SENTRY("A/FLAM-40 Sentinella Fiammeggiante"),
     CODE_EAT12_ANTI_TANK_EMPLACEMENT("E/AT-12 Postazione Anticarro"),
-    CODE_B100_PORTABLE_HELLBOMB("B-100 Hellbomb Portatile", false, true);
+    CODE_B100_PORTABLE_HELLBOMB("B-100 Hellbomb Portatile", false, true),
+    CODE_LIFT860_HOVER_PACK("LIFT-860 Dispositivo Librante", false, true);
 
     // Attributes
     @NotNull private final String name;

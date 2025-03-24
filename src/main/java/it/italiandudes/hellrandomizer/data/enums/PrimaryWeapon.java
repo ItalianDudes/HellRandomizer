@@ -11,6 +11,7 @@ public enum PrimaryWeapon {
     AR61_TENDERIZER("AR-61 Batticarne", PrimaryWeaponCategory.ASSAULT_RIFLE),
     BR14_ADJUDICATOR("BR-14 Giudicatore", PrimaryWeaponCategory.ASSAULT_RIFLE),
     R2124_CONSTITUTION("R-2124 Costituzione", PrimaryWeaponCategory.MARKSMAN_RIFLE),
+    R6_DEADEYE("R-6 Occhio di Falco", PrimaryWeaponCategory.MARKSMAN_RIFLE),
     R63_DILIGENCE("R-63 Zelo", PrimaryWeaponCategory.MARKSMAN_RIFLE),
     R63CS_DILIGENCE_COUNTER_SNIPER("R-63CS Fucile Zelo da Cecchino", PrimaryWeaponCategory.MARKSMAN_RIFLE),
     PLAS39_ACCELERATOR_RIFLE("Fucile Acceleratore PLAS-39", PrimaryWeaponCategory.SNIPER_RIFLE),

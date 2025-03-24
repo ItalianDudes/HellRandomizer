@@ -16,8 +16,8 @@ public enum Booster {
     EXPERIMENTAL_INFUSION("Infusione Sperimentale"),
     FIREBOMB_HELLPODS("Hellpod Incendiari"),
     DEAD_SPRINT("Sprint Mortale"),
-    ARMED_RESUPPLY_PODS("Pod di Rifornimento Armati")
-    ;
+    ARMED_RESUPPLY_PODS("Pod di Rifornimento Armati"),
+    SAMPLE_EXTRADICATOR("Estrattore di Campioni");
 
     // Attributes
     @NotNull private final String name;

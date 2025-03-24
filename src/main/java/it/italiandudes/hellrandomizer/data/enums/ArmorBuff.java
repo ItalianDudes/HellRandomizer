@@ -17,7 +17,8 @@ public enum ArmorBuff {
     ELECTRICAL_CONDUIT("Guaina Elettrica"),
     DEMOCRACY_PROTECTS("La Democrazia Protegge"),
     SERVO_ASSISTED("Servoassistito"),
-    INTEGRATED_EXPLOSIVES("Esplosivo Integrato");
+    INTEGRATED_EXPLOSIVES("Esplosivo Integrato"),
+    GUNSLINGER("Pistolero");
 
     // Attributes
     @NotNull

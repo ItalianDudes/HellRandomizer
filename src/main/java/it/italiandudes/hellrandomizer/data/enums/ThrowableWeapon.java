@@ -13,7 +13,8 @@ public enum ThrowableWeapon {
     G50_SEEKER("G-50 Cercatore", ThrowableWeaponCategory.SPECIAL),
     G3_SMOKE("G-3 Fumogena", ThrowableWeaponCategory.SPECIAL),
     G123_THERMITE("G-123 Termite", ThrowableWeaponCategory.SPECIAL),
-    K2_THROWING_KNIFE("K-2 Coltello da Lancio", ThrowableWeaponCategory.SPECIAL);
+    K2_THROWING_KNIFE("K-2 Coltello da Lancio", ThrowableWeaponCategory.SPECIAL),
+    TED63_DYNAMITE("TED-63 Dinamite", ThrowableWeaponCategory.SPECIAL);
 
     // Attributes
     @NotNull private final String name;

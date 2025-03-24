@@ -16,7 +16,8 @@ public enum SecondaryWeapon {
     GP31_GRENADE_PISTOL("GP-31 Pistola a Granate", SecondaryWeaponCategory.SPECIAL),
     LAS7_DAGGER("LAS-7 Pugnale", SecondaryWeaponCategory.SPECIAL),
     GP31_ULTIMATUM("GP-31 Ultimatum", SecondaryWeaponCategory.SPECIAL),
-    PLAS15_LOYALIST("PLAS-15 Lealista", SecondaryWeaponCategory.SPECIAL);
+    PLAS15_LOYALIST("PLAS-15 Lealista", SecondaryWeaponCategory.SPECIAL),
+    LAS58_TALON("LAS-58 Artiglio", SecondaryWeaponCategory.SPECIAL);
 
     // Attributes
     @NotNull private final String name;
