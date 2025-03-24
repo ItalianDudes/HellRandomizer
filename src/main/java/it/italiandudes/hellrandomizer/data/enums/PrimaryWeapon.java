@@ -3,6 +3,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 import org.jetbrains.annotations.NotNull;
 
 public enum PrimaryWeapon {
+    // ALWAYS ADD TO THE BOTTOM
     AR23_LIBERATOR("AR-23 Liberatore", PrimaryWeaponCategory.ASSAULT_RIFLE),
     AR23P_LIBERATOR_PENETRATOR("AR-23P Liberatore Penetrante", PrimaryWeaponCategory.ASSAULT_RIFLE),
     AR23C_LIBERATOR_PERCUSSIVE("AR-23C Liberatore a Percussione", PrimaryWeaponCategory.ASSAULT_RIFLE),
@@ -11,7 +12,6 @@ public enum PrimaryWeapon {
     AR61_TENDERIZER("AR-61 Batticarne", PrimaryWeaponCategory.ASSAULT_RIFLE),
     BR14_ADJUDICATOR("BR-14 Giudicatore", PrimaryWeaponCategory.ASSAULT_RIFLE),
     R2124_CONSTITUTION("R-2124 Costituzione", PrimaryWeaponCategory.MARKSMAN_RIFLE),
-    R6_DEADEYE("R-6 Occhio di Falco", PrimaryWeaponCategory.MARKSMAN_RIFLE),
     R63_DILIGENCE("R-63 Zelo", PrimaryWeaponCategory.MARKSMAN_RIFLE),
     R63CS_DILIGENCE_COUNTER_SNIPER("R-63CS Fucile Zelo da Cecchino", PrimaryWeaponCategory.MARKSMAN_RIFLE),
     PLAS39_ACCELERATOR_RIFLE("Fucile Acceleratore PLAS-39", PrimaryWeaponCategory.SNIPER_RIFLE),
@@ -37,7 +37,9 @@ public enum PrimaryWeapon {
     PLAS1_SCORCHER("PLAS-1 Spellatore", PrimaryWeaponCategory.ENERGY_BASED),
     PLAS101_PURIFIER("PLAS-101 Purificatore", PrimaryWeaponCategory.ENERGY_BASED),
     FLAM66_TORCHER("FLAM-66 Piromane", PrimaryWeaponCategory.SPECIAL),
-    JAR5_DOMINATOR("JAR-5 Dominatore", PrimaryWeaponCategory.SPECIAL);
+    JAR5_DOMINATOR("JAR-5 Dominatore", PrimaryWeaponCategory.SPECIAL),
+    R6_DEADEYE("R-6 Occhio di Falco", PrimaryWeaponCategory.MARKSMAN_RIFLE);
+    // ALWAYS ADD TO THE BOTTOM
 
     // Attributes
     @NotNull private final String name;

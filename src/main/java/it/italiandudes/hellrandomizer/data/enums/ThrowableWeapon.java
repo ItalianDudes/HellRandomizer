@@ -3,6 +3,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 import org.jetbrains.annotations.NotNull;
 
 public enum ThrowableWeapon {
+    // ALWAYS ADD TO THE BOTTOM
     G6_FRAG("G-6 a Frammentazione", ThrowableWeaponCategory.STANDARD),
     G12_HIGH_EXPLOSIVE("G-12 Altamente Esplosiva", ThrowableWeaponCategory.STANDARD),
     G10_INCENDIARY("G-10 Incendiaria", ThrowableWeaponCategory.STANDARD),
@@ -15,6 +16,7 @@ public enum ThrowableWeapon {
     G123_THERMITE("G-123 Termite", ThrowableWeaponCategory.SPECIAL),
     K2_THROWING_KNIFE("K-2 Coltello da Lancio", ThrowableWeaponCategory.SPECIAL),
     TED63_DYNAMITE("TED-63 Dinamite", ThrowableWeaponCategory.SPECIAL);
+    // ALWAYS ADD TO THE BOTTOM
 
     // Attributes
     @NotNull private final String name;

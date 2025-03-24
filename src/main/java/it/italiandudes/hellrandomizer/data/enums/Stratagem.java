@@ -3,6 +3,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 import org.jetbrains.annotations.NotNull;
 
 public enum Stratagem {
+    // ALWAYS ADD TO THE BOTTOM
     CODE_MG43_MACHINE_GUN("MG-43 Mitragliatrice", true),
     CODE_APW1_ANTI_MATERIEL_RIFLE("APW-1 Fucile Antimateriale", true),
     CODE_M105_STALWART("M-105 Vigoroso", true),
@@ -68,6 +69,7 @@ public enum Stratagem {
     CODE_EAT12_ANTI_TANK_EMPLACEMENT("E/AT-12 Postazione Anticarro"),
     CODE_B100_PORTABLE_HELLBOMB("B-100 Hellbomb Portatile", false, true),
     CODE_LIFT860_HOVER_PACK("LIFT-860 Dispositivo Librante", false, true);
+    // ALWAYS ADD TO THE BOTTOM
 
     // Attributes
     @NotNull private final String name;

@@ -3,6 +3,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 import org.jetbrains.annotations.NotNull;
 
 public enum Booster {
+    // ALWAYS ADD TO THE BOTTOM
     HELLPOD_SPACE_OPTIMIZATION("Ottimizzazione Spazio Hellpod"),
     VITALITY_ENHANCEMENT("Miglioramento della Vitalità"),
     UAV_RECON_BOOSTER("Potenziamento Ricognizione Via Drone"),
@@ -18,6 +19,7 @@ public enum Booster {
     DEAD_SPRINT("Sprint Mortale"),
     ARMED_RESUPPLY_PODS("Pod di Rifornimento Armati"),
     SAMPLE_EXTRADICATOR("Estrattore di Campioni");
+    // ALWAYS ADD TO THE BOTTOM
 
     // Attributes
     @NotNull private final String name;

@@ -3,6 +3,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 import org.jetbrains.annotations.NotNull;
 
 public enum SecondaryWeapon {
+    // ALWAYS ADD TO THE BOTTOM
     P2_PEACEMAKER("P-2 Pacificatore", SecondaryWeaponCategory.PISTOL),
     P19_REDEEMER("P-19 Redentore", SecondaryWeaponCategory.PISTOL),
     P113_VERDICT("P-113 Verdetto", SecondaryWeaponCategory.PISTOL),
@@ -18,6 +19,7 @@ public enum SecondaryWeapon {
     GP31_ULTIMATUM("GP-31 Ultimatum", SecondaryWeaponCategory.SPECIAL),
     PLAS15_LOYALIST("PLAS-15 Lealista", SecondaryWeaponCategory.SPECIAL),
     LAS58_TALON("LAS-58 Artiglio", SecondaryWeaponCategory.SPECIAL);
+    // ALWAYS ADD TO THE BOTTOM
 
     // Attributes
     @NotNull private final String name;

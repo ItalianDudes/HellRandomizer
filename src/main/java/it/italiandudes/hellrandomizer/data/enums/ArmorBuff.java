@@ -3,6 +3,7 @@ package it.italiandudes.hellrandomizer.data.enums;
 import org.jetbrains.annotations.NotNull;
 
 public enum ArmorBuff {
+    // ALWAYS ADD TO THE BOTTOM
     ADVANCED_FILTRATION("Filtro Avanzato"),
     INFLAMMABLE("Ignifugo"),
     PEAK_PHYSIQUE("Fisico Perfetto"),
@@ -19,6 +20,7 @@ public enum ArmorBuff {
     SERVO_ASSISTED("Servoassistito"),
     INTEGRATED_EXPLOSIVES("Esplosivo Integrato"),
     GUNSLINGER("Pistolero");
+    // ALWAYS ADD TO THE BOTTOM
 
     // Attributes
     @NotNull
